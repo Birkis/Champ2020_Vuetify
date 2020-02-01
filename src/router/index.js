@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
+import CreateSession from '@/views/CreateSession'
+import EditProfile from '@/views/EditProfile'
+import SessionsList from '@/views/SessionsList'
+import ViewProfiles from '@/views/ViewProfiles'
 
 Vue.use(VueRouter)
 
@@ -9,6 +13,23 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
+  },{
+    path:'/createsession',
+    name:'CreateSession',
+    component: CreateSession
+  },{
+    path:'/EditProfile',
+    name: 'EditProfile',
+    component: EditProfile
+
+  },{
+    path:'/sessionslist',
+    name: 'SessionsList',
+    component: SessionsList
+  },{
+    path:'/viewprofiles',
+    name: 'ViewProfiles',
+    component: ViewProfiles
   },
   {
     path: '/about',

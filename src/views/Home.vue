@@ -1,9 +1,8 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-  </div>
+  <v-content>
+    <h1 class="font-italic-light">Welcome to Champ</h1>
+  </v-content>
 </template>
-
 <script>
 // @ is an alias to /src
 
