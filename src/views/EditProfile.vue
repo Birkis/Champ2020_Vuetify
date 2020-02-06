@@ -1,13 +1,13 @@
 <template>
 <v-content class="" > 
     <v-layout justify-center>
-        <h1 class="display-1" justify-center>Edit Your Profile</h1>
+        <h1 class="display-1" >Edit Your Profile</h1>
     </v-layout>   
     <v-container>
        <v-form v-model="valid"> 
             <v-layout row wrap justify-space-around>
                 <v-flex xs12 md5> <!-- Name & Email input Collapsed Code -->
-                            <v-container> <!-- Diverse input fields -->
+                            <v-container fluid> <!-- Diverse input fields -->
                                 <v-layout row wrap>   <!-- firstname, lastname, email -->
                                     <v-text-field
                                         v-model="firstname"
@@ -74,7 +74,7 @@
                                                 </template>
                                 </v-combobox>
                             </v-container>  
-                            <v-container>  <!-- DOB Picker -->
+                            <v-container fluid>  <!-- DOB Picker -->
                                 <v-menu
                                     ref="menu"
                                     v-model="menu"
@@ -98,7 +98,9 @@
                                         <v-btn text color="primary" @click="$refs.menu.save(dob)">OK</v-btn>
                                     </v-date-picker>
                                 </v-menu>
-                            </v-container>               
+                            </v-container>   
+                            <v-container fluid> <!-- Add your location -->
+                            </v-container>            
                 </v-flex>    
                 <v-flex xs12 md5> <!-- Add Bio -->
                             <v-textarea
@@ -117,6 +119,10 @@
 
                 </v-flex>
             </v-layout>
+            <v-layout justify-center>
+                    <v-btn depressed color="deep-orange">Update Profile</v-btn>
+            </v-layout>
+            
         </v-form>
     </v-container>  
 </v-content> 
