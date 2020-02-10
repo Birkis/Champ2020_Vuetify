@@ -1,8 +1,8 @@
 <template>
   <v-app class="grey lighten-4">
-      <v-content class="mx-5 mb-4" >
-       <navbar/>
-        <router-view></router-view>
+      <v-content>
+      <navbar/>
+      <router-view></router-view>
 
 
       </v-content>
@@ -26,3 +26,7 @@ export default {
   },
 };
 </script>
+
+<style>
+
+</style>

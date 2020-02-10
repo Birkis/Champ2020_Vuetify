@@ -1,63 +1,24 @@
 <template>
-    <v-content>
-        <v-layout justify-center row wrap>
-            <v-flex xs-12>
-                <h1 class="display-1">Sessions List</h1>
-            </v-flex>
-             
-        </v-layout>
-        <v-layout row wrap>
-            <v-flex xs12 sm6 md4 lg3 v-for="x in 5" :key="x.index" pa-2>
-                <v-card min-width="300" max-width="400">
-                    <v-layout row wrap>
-                        <v-layout column>
-                                <v-flex xs12 md6>
-                                    <v-card-title>
-                                        Session title
-                                    </v-card-title>
-                                </v-flex>
-                                <v-flex xs12 md6>
-                                    <v-card-subtitle>
-                                        Host Name
-                                    </v-card-subtitle>
-                                </v-flex>
-
-                        </v-layout>
-                        
-                        <v-flex xs12 md6>
-                            <v-card-subtitle>
-                                A short description of the session
-                            </v-card-subtitle>     
-                   
-                        </v-flex>
-                         
-                    </v-layout>
-                    
-                    <v-rating v-model="rating" readonly="readonly" ></v-rating>
-                    <v-card-actions>
-                        <v-btn class="" text depressed color="deep-orange" > Share </v-btn>
-                    
+ <v-content >
+    <v-container fluid error>
+        <v-row >
+            <v-col v-for="n in 6" :key="n" xs12 sm6 md4 lg3>
+                <v-card max-width="500" >
+                    <v-img height="200" src="https://images.complex.com/complex/image/upload/c_fill,dpr_auto,q_90,w_920/fl_lossy,pg_1/NBA-Off-Season-Training_Lead_1_g2ylen.jpg">
+                    </v-img>
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="show =!show">
-                        <v-icon> {{  show ? 'mdi-chevron-up' : 'mdi-chevron-down'}}</v-icon>
-                    </v-btn>
-                    </v-card-actions>
-                    <v-card-transition>
-                        <div v-show="show">
-                            <v-divider></v-divider>
-                            <v-card-text>
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, illum excepturi! Minus, nulla voluptas. Voluptatem, voluptas a? Dolores voluptatum commodi, perferendis rem quis provident aliquam fuga dignissimos harum voluptatem culpa?
-                            </v-card-text>
-
-                        </div>
-                    </v-card-transition>
+                    <v-card-text>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                         Temporibus vel eos, fugiat harum magni expedita quis illum, 
+                         reiciendis dolorum odio amet nobis, veritatis deleniti culpa maiores. 
+                         Facilis, necessitatibus. Sequi, at?
+                    </v-card-text>
                 </v-card>
-
-            </v-flex>
-           
-        </v-layout>
-       
-    </v-content>
+            </v-col>
+        </v-row>
+     
+    </v-container>
+  </v-content>
 </template>
 
 
@@ -66,9 +27,7 @@ export default {
     name:'SessionsList',
     data(){
         return{
-            show:false,
-            rating:2,
-            readonly:true,
+         
 
         }
     }
