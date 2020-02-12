@@ -1,35 +1,35 @@
 <template>
-<v-content class="" > 
-    <v-layout justify-center>
-        <h1 class="display-1" >Edit Your Profile</h1>
-    </v-layout>   
+<v-content class="" >  
     <v-container>
+        <v-row>
        <v-form v-model="valid"> 
             <v-layout row wrap justify-space-around>
                 <v-flex xs12 md5> <!-- Name & Email input Collapsed Code -->
                             <v-container fluid> <!-- Diverse input fields -->
-                                <v-layout row wrap>   <!-- firstname, lastname, email -->
-                                    <v-text-field
-                                        v-model="firstname"
-                                        :rules="nameRules"
-                                        :counter="10"
-                                        label="First name"
-                                        required
-                                    ></v-text-field>   <!-- firstname -->                        
-                                    <v-text-field
-                                        v-model="lastname"
-                                        :rules="nameRules"
-                                        :counter="10"
-                                        label="Last name"
-                                        required
-                                    ></v-text-field> <!-- lastname -->
-                                    <v-text-field
-                                        v-model="email"
-                                        :rules="emailRules"
-                                        label="E-mail"
-                                        required
-                                    ></v-text-field> <!-- email -->
-                                </v-layout>
+                                <v-row row wrap>   <!-- firstname, lastname, email -->
+                                    <v-col>
+                                        <v-text-field
+                                            v-model="firstname"
+                                            :rules="nameRules"
+                                            :counter="10"
+                                            label="First name"
+                                            required
+                                        ></v-text-field>   <!-- firstname -->                        
+                                        <v-text-field
+                                            v-model="lastname"
+                                            :rules="nameRules"
+                                            :counter="10"
+                                            label="Last name"
+                                            required
+                                        ></v-text-field> <!-- lastname -->
+                                        <v-text-field
+                                            v-model="email"
+                                            :rules="emailRules"
+                                            label="E-mail"
+                                            required
+                                        ></v-text-field> <!-- email -->
+                                    </v-col>
+                                </v-row>
                                 <v-combobox
                                 v-model="gender_model"
                                 :items="gender_options"
@@ -124,6 +124,7 @@
             </v-layout>
             
         </v-form>
+        </v-row>
     </v-container>  
 </v-content> 
 </template>
