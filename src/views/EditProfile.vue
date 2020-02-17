@@ -1,132 +1,72 @@
 <template>
-<v-content class="" >  
-    <v-container>
-        <v-row>
-       <v-form v-model="valid"> 
-            <v-layout row wrap justify-space-around>
-                <v-flex xs12 md5> <!-- Name & Email input Collapsed Code -->
-                            <v-container fluid> <!-- Diverse input fields -->
-                                <v-row row wrap>   <!-- firstname, lastname, email -->
-                                    <v-col>
-                                        <v-text-field
-                                            v-model="firstname"
-                                            :rules="nameRules"
-                                            :counter="10"
-                                            label="First name"
-                                            required
-                                        ></v-text-field>   <!-- firstname -->                        
-                                        <v-text-field
-                                            v-model="lastname"
-                                            :rules="nameRules"
-                                            :counter="10"
-                                            label="Last name"
-                                            required
-                                        ></v-text-field> <!-- lastname -->
-                                        <v-text-field
-                                            v-model="email"
-                                            :rules="emailRules"
-                                            label="E-mail"
-                                            required
-                                        ></v-text-field> <!-- email -->
-                                    </v-col>
-                                </v-row>
-                                <v-combobox
-                                v-model="gender_model"
-                                :items="gender_options"
-                                :search-input.sync="gender_search"
-                                hide-selected
-                                hint="Set your gender"
-                                label="Where do you identify?"
-                                persistent-hint
-                                small-chips
-                                >  <!-- gender -->
-                                    <template v-slot:no-data>
-                                        <v-list-item>
-                                        <v-list-item-content>
-                                            <v-list-item-title>
-                                            No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-                                            </v-list-item-title>
-                                        </v-list-item-content>
-                                        </v-list-item>
-                                    </template>
-                                </v-combobox>
-                            </v-container>
-                            <v-container fluid> <!--  Add some Tags Collapsed code  -->
-                                <v-combobox
-                                                v-model="model"
-                                                :items="items"
-                                                :search-input.sync="search"
-                                                hide-selected
-                                                hint="Maximum of 5 tags"
-                                                label="Add some tags to your profile"
-                                                multiple
-                                                persistent-hint
-                                                small-chips
-                                                >
-                                                <template v-slot:no-data>
-                                                    <v-list-item>
-                                                    <v-list-item-content>
-                                                        <v-list-item-title>
-                                                        No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-                                                        </v-list-item-title>
-                                                    </v-list-item-content>
-                                                    </v-list-item>
-                                                </template>
-                                </v-combobox>
-                            </v-container>  
-                            <v-container fluid>  <!-- DOB Picker -->
-                                <v-menu
-                                    ref="menu"
-                                    v-model="menu"
-                                    :close-on-content-click="false"
-                                    :return-value.sync="dob"
-                                    transition="scale-transition"
-                                    offset-y
-                                    min-width="290px"
-                                    >
-                                    <template v-slot:activator="{ on }">
-                                            <v-text-field
-                                            v-model="dob"
-                                            label="Set your date of birth"
-                                            readonly
-                                            v-on="on"
-                                            ></v-text-field>
-                                    </template>
-                                    <v-date-picker v-model="dob" no-title scrollable>
-                                        <v-spacer></v-spacer>
-                                        <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                        <v-btn text color="primary" @click="$refs.menu.save(dob)">OK</v-btn>
-                                    </v-date-picker>
-                                </v-menu>
-                            </v-container>   
-                            <v-container fluid> <!-- Add your location -->
-                            </v-container>            
-                </v-flex>    
-                <v-flex xs12 md5> <!-- Add Bio -->
-                            <v-textarea
-                                name="input-7-1"
-                                label="Bio"
-                                placeholder="Fill this space with something ingenious"
-                                hint="Write a few words about yourself"
-                                ></v-textarea>
-                            <v-text-field
-                                        v-model="motto"
-                                        :rules="mottoRules"
-                                        :counter="60"
-                                        label="motto"
-                            ></v-text-field> 
-
-
-                </v-flex>
-            </v-layout>
-            <v-layout justify-center>
-                    <v-btn depressed color="deep-orange">Update Profile</v-btn>
-            </v-layout>
-            
-        </v-form>
+    <v-container fluid>
+        <v-row> <!-- Heading -->
+            <v-col>
+               <v-text class="display-1">Edit your profile here</v-text>
+            </v-col>
         </v-row>
+        <v-form> <!-- All Form Inputs -->
+            <v-row> <!-- Edit Name and Email -->
+                <v-col cols="12" sm="6" m4="4">
+                    <v-text-field label="First Name" type="text"></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" m4="4">
+                    <v-text-field label="Last Name" type="text"></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" m4="4">
+                    <v-text-field label="Email" type="email"></v-text-field>
+                </v-col>
+                <v-col>
+                    <v-text-field label="Post code" type="number"></v-text-field>
+                </v-col>
+            </v-row>
+            <v-row align="center"> <!-- Edit Personals -->
+               <v-col name="gender"> <!-- set gender -->
+                   <v-autocomplete dense :items="genderItems" label="Set Gender" v-model="genderValue">
+                   </v-autocomplete>
+               </v-col>
+                <v-col> <!-- Date of Birth -->
+                        <v-menu ref="menu" v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="date"
+                                    label="Set Birthday"
+                                    readonly
+                                    v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                            ref="picker"
+                            v-model="date"
+                            :max="new Date().toISOString().substr(0, 10)"
+                            min="1950-01-01"
+                            @change="save"
+                            ></v-date-picker>
+                        </v-menu>
+                </v-col>
+            </v-row>
+            <v-row> <!-- select interestd -->
+                <v-col>
+                    <v-autocomplete dense chips :items="interestItems" label="Set interests" v-model="interestValues" multiple outlined>
+                    </v-autocomplete>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="12" sm="6" m4="4"><v-text-field type="text" placeholder="Never surrender, never say die" label="My motto"></v-text-field></v-col>
+                <v-col cols="12" sm="6" m4="4"><v-text-field type="text" placeholder="Be happy, or die trying" label="My goal"></v-text-field></v-col>
+            </v-row>
+            <v-row> <!-- For Trainers -->
+                <v-col>
+                    <v-switch label="I'm a personal trainer"> </v-switch>
+                </v-col>
+            </v-row>
+            <v-row> <!-- Submit button -->
+                <v-col> 
+                    <v-btn color="deep-orange" class="white--text" depressed>Update Info</v-btn>
+                </v-col>
+            </v-row>
+         </v-form>
     </v-container>  
-</v-content> 
 </template>
 
 
@@ -135,36 +75,13 @@ export default {
     name:'EditProfile',
     data(){
         return{
-
-            items: ['indoor', 'outdoor', 'gym', 'fitness','professional','amateur','noob','enthusiast','team sports','mindfulness'],
-            model: [],
-            search: null,
-            valid: false,
+            genderItems:['male','female','not your business'],
+            genderValue:null,
+            interestItems:['basketball', 'yoga', 'running', 'windsurfing', 'bodybuilding','golf','Lacrosse'],
+            interestValues:null,
+            date:null,
             menu:false,
-            firstname: '',
-            lastname: '',
-            nameRules: [
-                v => !!v || 'Name is required',
-                v => v.length <= 10 || 'Name must be less than 10 characters',
-            ],
-            mottoRules: [
-                v => v.length <= 60 || 'Motto must be less than 40 characters',
-            ],
-            dob: new Date().toISOString().substr(0, 10),
-            located:null,
-            gender_options:['Male','Female','None of yo business','Somewhere in between'],
-            gender_model:[],
-            gender_search: null,
-            gender_valid:false,
-            email: '',
-            emailRules: [
-                v => !!v || 'E-mail is required',
-                v => /.+@.+/.test(v) || 'E-mail must be valid',
-            ],
-            isTrainer:false,
-            motto:'',
-            trainsAt:[],
-            reviews:[ {rating:5, description:'Elsket det!',reviewer:'Jens Jensen'} ]
+
 
         }
     },
@@ -174,9 +91,19 @@ export default {
           this.$nextTick(() => this.model.pop())
         }
       },
+      menu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+      },
+    },
+    methods: {
+      save (date) {
+        this.$refs.menu.save(date)
+      },
     },
 }
 </script>
+
+
 
 <style scoped>
 
