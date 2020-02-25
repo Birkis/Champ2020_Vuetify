@@ -22,7 +22,7 @@
             </v-row>
             <v-row align="center"> <!-- Edit Personals -->
                <v-col name="gender"> <!-- set gender -->
-                   <v-autocomplete dense :items="genderItems" label="Set Gender" v-model="genderValue">
+                   <v-autocomplete dense :items="genders" label="Set Gender" v-model="genderValue">
                    </v-autocomplete>
                </v-col>
                 <v-col> <!-- Date of Birth -->
@@ -45,9 +45,9 @@
                         </v-menu>
                 </v-col>
             </v-row>
-            <v-row> <!-- select interestd -->
+            <v-row> <!-- select interests -->
                 <v-col>
-                    <v-autocomplete dense chips :items="interestItems" label="Set interests" v-model="interestValues" multiple outlined>
+                    <v-autocomplete dense chips :items="interests" label="Set interests" v-model="interestValues" multiple outlined>
                     </v-autocomplete>
                 </v-col>
             </v-row>
@@ -75,15 +75,22 @@ export default {
     name:'EditProfile',
     data(){
         return{
-            genderItems:['male','female','not your business'],
             genderValue:null,
-            interestItems:['basketball', 'yoga', 'running', 'windsurfing', 'bodybuilding','golf','Lacrosse'],
             interestValues:null,
             date:null,
             menu:false,
 
 
         }
+    },
+    computed:{
+        interests(){
+            return this.$store.state.interests
+        },
+        genders(){
+            return this.$store.state.genderTypes
+        }
+
     },
     watch: {
       model (val) {
