@@ -5,12 +5,12 @@
          <v-container>
             <v-row> <!--  Title -->
                 <v-col> 
-                    <v-text-field label="Session Title" type="text"></v-text-field>
+                    <v-text-field label="Session Title" type="text" v-model="sessionTitle"></v-text-field>
                 </v-col>
             </v-row>
-            <v-row> <!--  Descriotion -->
+            <v-row> <!--  Description -->
                 <v-col>
-                    <v-text-field label="Description" type="text"></v-text-field>
+                    <v-textarea label="Description" type="text" v-model="sessionDescription"></v-textarea>
                 </v-col>
             </v-row>
             <v-row> <!--  Activity -->
@@ -20,22 +20,22 @@
             </v-row>
             <v-row> <!--  Start Time & Duration -->
                 <v-col>
-                    <v-text-field label="Start date" placeholder="21/10"></v-text-field>
+                    <v-text-field label="Start date" placeholder="21/10" v-model="sessionTime.startDate"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Start time" placeholder="17:30"></v-text-field>
+                    <v-text-field label="Start time" placeholder="17:30" v-model="sessionTime.startTime"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Duration" type="number"></v-text-field>
+                    <v-text-field label="Duration" type="number" v-model="sessionTime.duration"></v-text-field>
                 </v-col>
         
             </v-row>
             <v-row> <!-- People & Price -->
                 <v-col>
-                    <v-text-field label="How many people" type="number"></v-text-field>
+                    <v-text-field label="How many people" type="number" v-model="attendees"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Price" type="number"></v-text-field>
+                    <v-text-field label="Price" type="number" v-model="price"></v-text-field>
                 </v-col>
             </v-row>
             <v-row> <!-- Location -->
@@ -71,7 +71,16 @@ export default {
     name:'CreateSession',
     data(){
         return{
+            sessionTitle:null,
+            sessionDescription:null,
             activity: null,
+            sessionTime:{
+                startDate:null,
+                startTime:null,
+                duration:null
+            },
+            attendees:null,
+            price:null,
             interestValues: null,
             selectedPlace: null,
             geoLocation: {
@@ -89,7 +98,9 @@ export default {
             this.geoLocation.placeName = place.name
         },
         logValues(){
-            console.log(this.geoLocation.placeName)
+            console.log(`the session name is ${this.sessionTitle} described ${this.sessionDescription}. 
+            We will do some ${this.activity}. The session will be held in ${this.geoLocation.placeName}.
+            It has ${this.attendees} number of people` )
         }
     },
     computed: {
