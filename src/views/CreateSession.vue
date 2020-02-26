@@ -40,7 +40,7 @@
             </v-row>
             <v-row> <!-- Location -->
                 <v-col>
-                    <v-text-field label="Location"></v-text-field>
+                    <gmap-autocomplete class="gPlaces" @place_changed="setPlace"></gmap-autocomplete>
                 </v-col>
             </v-row>
             <v-row> <!-- Tags -->
@@ -53,7 +53,7 @@
     <v-container> <!-- Create Session Button-->
         <v-row>
             <v-col>
-                <v-btn color="deep-orange" class="white--text" depressed>
+                <v-btn color="deep-orange" class="white--text" @click.prevent="logValues" depressed>
                     Create Session
                 </v-btn>
             </v-col>
@@ -73,7 +73,22 @@ export default {
         return{
             //activityItems:['Basketball', 'Yoga', 'Running'],
             activity: null,
-            interestValues:null
+            interestValues: null,
+            selectedPlace: null,
+            geoLocation: {
+                lat:null,
+                lng:null
+            }
+        }
+    },
+    methods: {
+        setPlace(place) {
+            this.selectedPlace = place;
+            this.geoLocation.lat = place.geometry.location.lat()
+            this.geoLocation.lng = place.geometry.location.lng()
+        },
+        logValues(){
+            console.log(this.geoLocation.lat)
         }
     },
     computed: {
@@ -93,5 +108,11 @@ export default {
 </script>
 
 <style scoped>
+
+ .gPlaces{
+     color:black;
+     width: 100%;
+     padding: 10px;
+ }
 
 </style>
