@@ -71,13 +71,13 @@ export default {
     name:'CreateSession',
     data(){
         return{
-            //activityItems:['Basketball', 'Yoga', 'Running'],
             activity: null,
             interestValues: null,
             selectedPlace: null,
             geoLocation: {
                 lat:null,
-                lng:null
+                lng:null,
+                placeName:null
             }
         }
     },
@@ -86,9 +86,10 @@ export default {
             this.selectedPlace = place;
             this.geoLocation.lat = place.geometry.location.lat()
             this.geoLocation.lng = place.geometry.location.lng()
+            this.geoLocation.placeName = place.name
         },
         logValues(){
-            console.log(this.geoLocation.lat)
+            console.log(this.geoLocation.placeName)
         }
     },
     computed: {
@@ -113,6 +114,9 @@ export default {
      color:black;
      width: 100%;
      padding: 10px;
+     border: 1px solid darkgrey;
+     border-radius: 5px;
+     font-weight: bold;
  }
 
 </style>
