@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 <template>
   <v-content>
-      <h1 class="display-1" justify-start >Create Session Here</h1>
-    <v-form>
+    <h1 class="display-1" justify-start >Create Session Here</h1>
+    <v-form> <!-- create the session -->
          <v-container>
             <v-row> <!--  Title -->
                 <v-col> 
@@ -60,13 +61,15 @@
         </v-row>
     </v-container>
     </v-form>
-   
-
   </v-content>
 </template>
 
 
 <script>
+// eslint-disable-next-line no-unused-vars
+import firebase from 'firebase'
+import db from '@/firebase/init'
+
 export default {
     name:'CreateSession',
     data(){
@@ -101,6 +104,11 @@ export default {
             console.log(`the session name is ${this.sessionTitle} described ${this.sessionDescription}. 
             We will do some ${this.activity}. The session will be held in ${this.geoLocation.placeName}.
             It has ${this.attendees} number of people` )
+        },
+        saveData(){
+            db.collection('sessions').doc().set({
+                sessionTitle:this.sessionTitle
+            })
         }
     },
     computed: {
@@ -114,9 +122,26 @@ export default {
             })
             return activities
         }
-
     }    
 }
+
+//  db.collection('sessions').doc().set({
+//                         host_id: user_id,
+//                         title:this.title,
+//                         description:this.description,
+//                         sessionStart:this.sessionStart,
+//                         duration:this.duration,
+//                         spots:this.spots,
+//                         price:this.price,
+//                         category:this.category,
+//                         location:this.location,
+//                         host_name,
+//                         host_pic,
+//                         timestamp
+//                     }).then(()=> {
+//                         this.$router.push({name:'Home'})
+//                     })
+
 </script>
 
 <style scoped>
@@ -131,3 +156,7 @@ export default {
  }
 
 </style>
+
+
+
+

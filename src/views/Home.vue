@@ -1,22 +1,17 @@
 <template>
   <v-content>
-    <v-container primary >
-
-      <v-layout row justify-space-around>
-        <v-col cols="4"> 
-          <v-flex  xs12 md6 lg12 class="deep-orange" my-1 pa-5>hello </v-flex>
-          <v-flex xs12 md6 lg4 class="pink lighten-3" my-1 pa-5>hello </v-flex>
-        </v-col>
-        
-        <v-flex xs12 md6 lg4 class="teal lighten-2" pa-5>hello </v-flex>
-      </v-layout>   
-       
+    <v-container >
+       <h1> HOME</h1>
+       <v-text-field label="session inpug" v-model="sessionTitle"></v-text-field>
+       <v-btn @click.prevent="saveTitle">get data</v-btn>
     </v-container>
 
   </v-content>
 </template>
 <script>
 // @ is an alias to /src
+//import firebase from 'firebase'
+import db from '@/firebase/init'
 
 export default {
   name: 'home',
@@ -25,7 +20,24 @@ export default {
   },
   data(){
     return {
+      sessionTitle:null
 
+    }
+
+  },
+  methods:{
+    logginIt(){
+      console.log(this.sessionTitle)
+    },
+    logIt(){
+      db.collection('sessions').get().then(res => {
+        res.forEach(res => {
+          console.log(res.data())
+        })
+      })
+    },
+    saveTitle(){
+      db.collection('sessions').doc('l0cI3tvamDLOa1guqjfU').set({sessionTitle:this.sessionTitle})
     }
   }
 }
