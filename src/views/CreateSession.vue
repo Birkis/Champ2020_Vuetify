@@ -10,7 +10,7 @@
             </v-row>
             <v-row> <!--  Description -->
                 <v-col>
-                    <v-textarea label="Description" type="text" v-model="sessionDescription"></v-textarea>
+                    <v-textarea label="Description" type="text" v-model="sessionDescription" rows="2" auto-grow></v-textarea>
                 </v-col>
             </v-row>
             <v-row> <!--  Activity -->
