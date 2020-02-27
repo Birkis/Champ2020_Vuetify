@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <v-content>
-    <h1 class="display-1" justify-start >Create Session Here</h1>
-    <v-form> <!-- create the session -->
+  <v-container>
+    <h1 class="display-1" justify-start >Create Your Session</h1>
+    <v-form mx-5> <!-- create the session -->
          <v-container>
             <v-row> <!--  Title -->
                 <v-col> 
@@ -21,13 +21,13 @@
             </v-row>
             <v-row> <!--  Start Time & Duration -->
                 <v-col>
-                    <v-text-field label="Start date" placeholder="21/10" v-model="sessionTime.startDate"></v-text-field>
+                    <v-text-field type="date" label="Start date" placeholder="21/10" v-model="sessionTime.startDate"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Start time" placeholder="17:30" v-model="sessionTime.startTime"></v-text-field>
+                    <v-text-field type="time" label="Start time" placeholder="17:30" v-model="sessionTime.startTime"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Duration" type="number" v-model="sessionTime.duration"></v-text-field>
+                    <v-text-field label="Duration" type="number" v-model="sessionTime.duration" suffix="Hours"></v-text-field>
                 </v-col>
         
             </v-row>
@@ -36,7 +36,7 @@
                     <v-text-field label="How many people" type="number" v-model="attendees"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Price" type="number" v-model="price"></v-text-field>
+                    <v-text-field label="Price" type="number" v-model="price" suffix="NOK"></v-text-field>
                 </v-col>
             </v-row>
             <v-row> <!-- Location -->
@@ -54,14 +54,14 @@
     <v-container> <!-- Create Session Button-->
         <v-row>
             <v-col>
-                <v-btn color="deep-orange" class="white--text" @click.prevent="logValues" depressed>
+                <v-btn color="deep-orange" class="white--text" @click.prevent="saveData" depressed>
                     Create Session
                 </v-btn>
             </v-col>
         </v-row>
     </v-container>
     </v-form>
-  </v-content>
+  </v-container>
 </template>
 
 
@@ -102,13 +102,34 @@ export default {
         },
         logValues(){
             console.log(`the session name is ${this.sessionTitle} described ${this.sessionDescription}. 
-            We will do some ${this.activity}. The session will be held in ${this.geoLocation.placeName}.
+            We will do some ${this.activity}. The session will be held in ${this.geoLocation.lat} + ${this.geoLocation.lng}.
             It has ${this.attendees} number of people` )
         },
         saveData(){
             db.collection('sessions').doc().set({
-                sessionTitle:this.sessionTitle
+                sessionTitle:this.sessionTitle,
+                sessionDescription:this.sessionDescription,
+                activity:this.activity,
+                sessionTime:{
+                    startDate:this.sessionTime.startDate,
+                    startTime:this.sessionTime.startTime,
+                    duration:this.sessionTime.duration
+                },
+                attendees:this.attendees,
+                price:this.price,
+                interestValues:this.interestValues,
+                geoLocation:{
+                    lat:this.geoLocation.lat,
+                    lng:this.geoLocation.lng,
+                    placeName:this.geoLocation.placeName
+                },
+                hostId:1,
+                hostName:'Michael'
+            }).catch(error => {
+                console.log(error)
             })
+            this.$router.push('home')
+            
         }
     },
     computed: {

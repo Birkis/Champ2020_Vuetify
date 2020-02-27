@@ -16,7 +16,6 @@ import db from '@/firebase/init'
 export default {
   name: 'home',
   components: {
-    
   },
   data(){
     return {
