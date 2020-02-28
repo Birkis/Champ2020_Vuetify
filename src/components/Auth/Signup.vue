@@ -1,38 +1,12 @@
 <template>
-    <div class="container signup">
-        <form class="card-panel" action="" @submit.prevent="signupEmail">
-            <h2 class="center grey-darken-4-text">Sign up old school</h2>
-            <div class="field">
-                <label for="email">Email</label>
-                <input type="email" name="email" v-model="email" >
-            </div>
-            <div class="field">
-                <label for="email">Password</label>
-                <input type="password" name="password" v-model="password">
-            </div>
-            <div class="field">
-                <label for="name">Name</label>
-                <input type="text" name="name" v-model="name">
-            </div>
-            <p class="center red-text" v-if="feedback">{{feedback}}</p>
-            <div class="field center orange-button">
-                <button class="btn deep-orange">signup Email</button>
-            </div>
-        </form>
-          <p class="center">or</p>
-    <form action="" class="card-panel" @submit.prevent="signUpFacebook">
-            <div class="field center">
-            <button class="btn blue white-text">Log in with Facebook</button>
-            </div>
-    </form>
-
-        
-
-
-    </div>
+    <v-container>
+        <v-btn @click.prevent="signUpFacebook">Sign Up Facebook</v-btn>
+    </v-container>
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
+
 import firebase from 'firebase'
 import slugify from 'slugify'
 import db from '@/firebase/init'
@@ -51,30 +25,6 @@ export default {
         }
     },
     methods:{
-        signupEmail(){
-            if(this.name && this.email && this.password){
-                // this.slug = slugify(this.name, {
-                //     replacement: '-',
-                //     lower: true,
-                //     remove: /[*+~.()'"!:@]/g
-                // })
-                let ref = db.collection('users').get()
-                firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(res =>{
-                    db.collection('users').doc(res.user.uid).set({
-                        name:this.name,
-                        profilePic:this.profilePic,
-                        user_id:res.user.uid,
-                        email:this.email
-                    })
-                }).then(
-                    this.$router.push({name:'Home'})
-                )       
-           }
-        }
-          
-
-
-        },
         signUpFacebook(){
                 const provider = new firebase.auth.FacebookAuthProvider();
                 firebase.auth().signInWithPopup(provider).then(result =>{
@@ -88,15 +38,14 @@ export default {
                         user_id:result.user.uid,
                         profilePic:result.user.photoURL
                     }).then(()=> {
-                        this.$router.push({name:'Home'})
+                        this.$router.push({name:'home'})
                     })
                 }).catch(error =>{
-                    // eslint-disable-next-line no-unused-vars
                     let errorCode = error.code;
                 })
-            },
+            }
+        }
     }
-
 </script>
 
 
