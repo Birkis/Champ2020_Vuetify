@@ -1,12 +1,7 @@
 <template>
-  <v-content>
-    <v-container >
-       <h1> HOME</h1>
-       <v-text-field label="session inpug" v-model="sessionTitle"></v-text-field>
-       <v-btn @click.prevent="saveTitle">get data</v-btn>
+    <v-container>
+            <SessionCard :sessions="sessions"/>
     </v-container>
-
-  </v-content>
 </template>
 <script>
 // @ is an alias to /src
@@ -16,14 +11,20 @@ import db from '@/firebase/init'
 export default {
   name: 'home',
   components: {
+
   },
   data(){
     return {
-      sessionTitle:null
 
     }
 
   },
+  computed:{
+    sessions(){
+      return this.$store.state.sessions
+    }
+
+  }, //ends computed
   methods:{
     logginIt(){
       console.log(this.sessionTitle)
@@ -35,9 +36,6 @@ export default {
         })
       })
     },
-    saveTitle(){
-      db.collection('sessions').doc('l0cI3tvamDLOa1guqjfU').set({sessionTitle:this.sessionTitle})
-    }
-  }
+  } // ends methods
 }
 </script>

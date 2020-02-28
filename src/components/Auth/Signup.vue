@@ -1,6 +1,13 @@
 <template>
     <v-container>
-        <v-btn @click.prevent="signUpFacebook">Sign Up Facebook</v-btn>
+        <v-row>
+            <h1 class="display-1">Please Sign Up for Champ2020</h1>
+        </v-row>
+        <v-row >
+            <v-col justify="center" cols="12">
+                <v-btn class="primary" @click.prevent="signUpFacebook" depressed>Sign Up With Facebook</v-btn>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 

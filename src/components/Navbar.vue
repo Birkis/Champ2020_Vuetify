@@ -3,7 +3,12 @@
         <v-app-bar app flat>
                 <v-icon medium @click.prevent="drawer=!drawer"> mdi-dots-vertical </v-icon>
                 <v-toolbar-title class="display-1" ><span class="font-weight-light">CHAMP</span><span class="font-weight-bold" >2020</span> 
-                </v-toolbar-title>      
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+                <router-link :to="{ name: 'Signup'}"><v-toolbar-title class="mx-3">Signup</v-toolbar-title></router-link>
+                     
+                <v-toolbar-title class="mx-3">Login</v-toolbar-title>      
+
         </v-app-bar>    
 
         <v-navigation-drawer v-model="drawer" app class="deep-orange" >

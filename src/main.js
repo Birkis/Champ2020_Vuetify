@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import * as VueGoogleMaps from "vue2-google-maps";
+import SessionCard from '@/components/SessionCard'
+
+Vue.component('SessionCard', SessionCard)
 
 Vue.use(VueGoogleMaps, {
   load: {
