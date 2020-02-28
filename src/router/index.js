@@ -6,6 +6,7 @@ import EditProfile from '@/views/EditProfile'
 import SessionsList from '@/views/SessionsList'
 import ProfilesList from '@/views/ProfilesList'
 import SessionView from '@/views/SessionView'
+import Signup from '@/components/Auth/Signup'
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,11 @@ const routes = [
     path: '/sessionview',
     name: 'SessionView',
     component: SessionView
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
   },
   {
     path: '/about',

@@ -4,13 +4,13 @@
             <v-col>
                 <v-img height="500" class="align-end" src="https://images.complex.com/complex/image/upload/c_fill,dpr_auto,q_90,w_920/fl_lossy,pg_1/NBA-Off-Season-Training_Lead_1_g2ylen.jpg">
                 <v-avatar class="ma-4 white--text headline" color="success" left>MB</v-avatar>
-                <v-title class="display-1 white--text">Sessions Title</v-title>
+                <h1 class="display-1 white--text">Sessions Title</h1>
                 </v-img>
             </v-col>   
         </v-row>
         <v-row justify="center">
             <v-col cols="8">
-                <v-text class="subtitle-1 grey--text">Some Description of the session. Prefferably not too long!</v-text>    
+                <p class="subtitle-1 grey--text">Some Description of the session. Prefferably not too long!</p>    
             </v-col>
         
             <v-col cols="8">
@@ -48,15 +48,17 @@
 
 
 <script>
+// eslint-disable-next-line no-unused-vars
+import db from '@/firebase/init'
+
 export default {
     name: 'SessionView',
-    data(){
-        return{
+    created(){
+        
+       
 
-
-
-        }
-    }
+    }, //end created
+  
 }
 </script>
 

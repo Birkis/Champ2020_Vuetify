@@ -1,6 +1,6 @@
 <template>
  <v-content >
-    <v-container fluid error>
+    <v-container fluid>
         <v-row >
             <v-col v-for="n in 6" :key="n" xs12 sm6 md4 lg3>
                 <v-card max-width="500" >
@@ -52,13 +52,39 @@
 
 
 <script>
+// import firebase from 'firebase'
+import db from '@/firebase/init' 
+
 export default {
     name:'SessionsList',
     data(){
         return{
-         
-
+            sessions:[],
+            session_ids:[],
+            name:null,
+            email:null,
+            locAtt:[]
         }
+    },
+    created(){
+        db.collection('sessions').get().then(res => {
+            res.forEach(doc => {
+                db.collection('sessions').doc(doc.id).set({session_id:doc.id},{merge:true});             
+            })
+        })
+        db.collection('sessions').get().then(res=>{
+            res.forEach(doc => this.sessions.push(doc.data())
+            )
+        }) 
+    },
+    mounted(){
+        // let user = db.collection('users').doc(firebase.auth().currentUser.uid).get().then( res => {
+        //     this.name = res.data().name
+        //     this.email = res.data().email
+        //     });
+        
+        
+      
     }
 }
 </script>
