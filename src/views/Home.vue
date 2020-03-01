@@ -4,6 +4,8 @@
     </v-container>
 </template>
 <script>
+/* eslint-disable no-unused-vars */
+
 // @ is an alias to /src
 //import firebase from 'firebase'
 import db from '@/firebase/init'
@@ -11,31 +13,25 @@ import db from '@/firebase/init'
 export default {
   name: 'home',
   components: {
-
   },
   data(){
     return {
-
+   
     }
-
   },
   computed:{
     sessions(){
       return this.$store.state.sessions
     }
-
   }, //ends computed
   methods:{
-    logginIt(){
-      console.log(this.sessionTitle)
-    },
-    logIt(){
-      db.collection('sessions').get().then(res => {
-        res.forEach(res => {
-          console.log(res.data())
-        })
-      })
-    },
-  } // ends methods
+  }, // ends methods
+  mounted(){
+
+  },//Ends Mounted
+  created(){
+    // dispatch en kommando til Store om å laste ned alle 
+    this.$store.dispatch('getSessions')
+  }
 }
 </script>

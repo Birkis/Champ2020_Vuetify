@@ -1,13 +1,13 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col>
-                <v-card max-width="344" class="mx-auto" v-for="session in sessions" :key="session">
+            <v-col v-for="session in sessions" :key="session.sessionTitle">
+                <v-card max-width="344" class="my-2">
                     <v-list-item>
                     <v-list-item-avatar color="green"></v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline">{{session.sessionTitle}}</v-list-item-title>
-                        <v-list-item-subtitle>{{session.sessionHost}}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{session.hostName}}</v-list-item-subtitle>
                     </v-list-item-content>
                     </v-list-item>
 

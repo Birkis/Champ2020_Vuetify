@@ -5,8 +5,10 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import * as VueGoogleMaps from "vue2-google-maps";
 import SessionCard from '@/components/SessionCard'
+import ProfileContent from '@/components/ProfileContent'
 
 Vue.component('SessionCard', SessionCard)
+Vue.component('ProfileContent', ProfileContent)
 
 Vue.use(VueGoogleMaps, {
   load: {

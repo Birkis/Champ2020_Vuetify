@@ -100,11 +100,6 @@ export default {
             this.geoLocation.lng = place.geometry.location.lng()
             this.geoLocation.placeName = place.name
         },
-        logValues(){
-            console.log(`the session name is ${this.sessionTitle} described ${this.sessionDescription}. 
-            We will do some ${this.activity}. The session will be held in ${this.geoLocation.lat} + ${this.geoLocation.lng}.
-            It has ${this.attendees} number of people` )
-        },
         saveData(){
             db.collection('sessions').doc().set({
                 sessionTitle:this.sessionTitle,
@@ -128,8 +123,17 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
-            this.$router.push('home')
+            this.$router.push('/')
             
+        },
+        onCreateSession () {        
+            const sessionData = {
+            sessionTitle: this.sessionTitle,
+            sessionDescription: this.sessionDescription,
+            hostName: 'Mikke Mus'
+            }
+            this.$store.dispatch('createSession', sessionData)
+            this.$router.push('/')
         }
     },
     computed: {

@@ -7,6 +7,7 @@ import SessionsList from '@/views/SessionsList'
 import ProfilesList from '@/views/ProfilesList'
 import SessionView from '@/views/SessionView'
 import Signup from '@/components/Auth/Signup'
+import ProfileView from '@/views/ProfileView'
 
 Vue.use(VueRouter)
 
@@ -15,20 +16,28 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
-  },{
+  },
+  {
     path:'/createsession',
     name:'CreateSession',
     component: CreateSession
-  },{
+  },
+  {
     path:'/EditProfile',
     name: 'EditProfile',
     component: EditProfile
-
-  },{
+  },
+  {
+    path:'/ProfileView',
+    name: 'ProfileView',
+    component: ProfileView
+  },
+  {
     path:'/sessionslist',
     name: 'SessionsList',
     component: SessionsList
-  },{
+  },
+  {
     path:'/ProfilesList',
     name: 'ProfilesList',
     component: ProfilesList
