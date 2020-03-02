@@ -2,11 +2,11 @@
     <v-container fluid>
         <v-row>
             <v-col v-for="session in sessions" :key="session.sessionTitle">
-                <v-card max-width="344" class="my-2">
+                <v-card max-width="500" class="my-2">
                     <v-list-item>
                     <v-list-item-avatar color="green"></v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title class="headline">{{session.sessionTitle}}</v-list-item-title>
+                        <v-list-item-title class="headline"> <router-link to="/profileview">{{session.sessionTitle}}</router-link> </v-list-item-title>
                         <v-list-item-subtitle>{{session.hostName}}</v-list-item-subtitle>
                     </v-list-item-content>
                     </v-list-item>

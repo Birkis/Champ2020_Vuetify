@@ -1,6 +1,19 @@
 <template>
-    <v-container>
-            <SessionCard :sessions="sessions"/>
+    <v-container fluid>
+          <v-tabs background-color="teal accent-4" class="elevation-2" grow dark>
+            <v-tab>Sessions</v-tab>
+              <v-tab-item>
+                <v-row justify="center">
+                  <v-col cols="12">
+                      <SessionCard :sessions="sessions"/>
+                  </v-col>
+                </v-row>
+              </v-tab-item>
+            <v-tab>Trainers</v-tab>
+              <v-tab-item>
+                <p> Trainers will show here</p>
+              </v-tab-item>
+          </v-tabs>
     </v-container>
 </template>
 <script>
