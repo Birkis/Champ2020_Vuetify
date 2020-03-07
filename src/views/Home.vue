@@ -40,11 +40,15 @@ export default {
   methods:{
   }, // ends methods
   mounted(){
+    
 
   },//Ends Mounted
   created(){
     // dispatch en kommando til Store om å laste ned alle 
+
+    
     this.$store.dispatch('getSessions')
+    //this.$store.dispatch('getCurrentUser')
   }
 }
 </script>

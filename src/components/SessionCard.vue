@@ -6,12 +6,12 @@
                     <v-list-item>
                     <v-list-item-avatar color="green"></v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title class="headline"> <router-link to="/profileview">{{session.sessionTitle}}</router-link> </v-list-item-title>
-                        <v-list-item-subtitle>{{session.hostName}}</v-list-item-subtitle>
+                        <v-list-item-title class="headline"> <router-link :to="{ name:'SessionView', params:{id:session.session_id}}">{{session.sessionTitle}}</router-link> </v-list-item-title>
+                        <v-list-item-subtitle><router-link :to="{ name:'ProfileView'}">{{session.hostName}}</router-link></v-list-item-subtitle>
                     </v-list-item-content>
                     </v-list-item>
 
-                        <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
+                        <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194" gradient="to bottom, rgba(100,115,201,.33), rgba(25,32,72,.99)"></v-img>
                         <v-card-text>
                             {{session.sessionDescription}}
                         </v-card-text>
@@ -43,8 +43,10 @@ export default {
     props:['sessions'],
     data(){
         return{
-            
+           
         }
+    },
+    mounted(){
     }
 
 }

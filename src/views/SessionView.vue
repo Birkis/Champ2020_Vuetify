@@ -1,39 +1,59 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col>
-                <v-img height="500" class="align-end" src="https://images.complex.com/complex/image/upload/c_fill,dpr_auto,q_90,w_920/fl_lossy,pg_1/NBA-Off-Season-Training_Lead_1_g2ylen.jpg">
-                <v-avatar class="ma-4 white--text headline" color="success" left>MB</v-avatar>
-                <h1 class="display-1 white--text">Sessions Title</h1>
+            <v-col cols="12" align="center">
+                <v-img height="500" gradient="to bottom, rgba(100,115,201,.1), rgba(25,32,72,.79)" class="align-end" src="https://images.complex.com/complex/image/upload/c_fill,dpr_auto,q_90,w_920/fl_lossy,pg_1/NBA-Off-Season-Training_Lead_1_g2ylen.jpg">
+                    <v-row align="center" >
+                        <v-col cols="3">
+                            <v-avatar class="ma-4 white--text headline" color="success" left>MB</v-avatar>
+                        </v-col>
+                        <v-col>
+                            <h1 class="display-1 white--text">{{session.sessionTitle}}</h1>
+                        </v-col>
+                    </v-row>
                 </v-img>
             </v-col>   
         </v-row>
         <v-row justify="center">
             <v-col cols="8">
-                <p class="subtitle-1 grey--text">Some Description of the session. Prefferably not too long!</p>    
+                <p class="subtitle-1 grey--text">{{session.sessionDescription}}</p>    
             </v-col>
         
             <v-col cols="8">
                 <v-chip-group class="ma-3">
-                    <v-chip mx-5 v-for="x in 3" :key="x" outlined color="orange">basketball</v-chip>
+                    <v-chip mx-5 v-for="x in 3" :key="x" outlined color="orange">{{session.activity}}</v-chip>
                 </v-chip-group>
                 <v-row no-gutters>
                     <v-col cols="5">
-                        <v-card-subtitle>Spots available: 2 of 5</v-card-subtitle>
-                        <v-card-subtitle>Venice Beach</v-card-subtitle>
+                        <v-card-subtitle>Spots available: 2 of {{session.attendees}}</v-card-subtitle>
+                        <v-card-subtitle>{{session.geoLocation.placeName}}</v-card-subtitle>
                     </v-col>
                     <v-col cols="4"> 
-                        <v-card-text>24-3-2020 kl. 17:30</v-card-text>
-                        <v-card-subtitle>Duration: 2h30min</v-card-subtitle>
+                        <v-card-text>{{session.sessionTime.startDate}} kl. {{session.sessionTime.startTime}}</v-card-text>
+                        <v-card-subtitle>Duration: {{session.sessionTime.duration}} hours</v-card-subtitle>
                     </v-col>
                     <v-col cols="3">
-                        <v-card-subtitle>Price: 34Kr.</v-card-subtitle>
+                        <v-card-subtitle>Price: {{session.price}}Kr.</v-card-subtitle>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
                 <v-row>
-                    <v-col>
-                        <v-img height="300" src="https://www.sketchappsources.com/resources/source-image/google-maps-ui-kit-agapimo.jpg"></v-img>
+                    <v-col cols="12" align="center">
+                        <GmapMap
+                            :center="{lat:session.geoLocation.lat, lng:session.geoLocation.lng}"
+                            :zoom="17"
+                            map-type-id="roadmap"
+                            style="width: 1000px; height: 350px"
+                            :options="{
+                                zoomControl: false,
+                                mapTypeControl: false,
+                                scaleControl: false,
+                                streetViewControl: false,
+                                rotateControl: false,
+                                fullscreenControl: true,
+                                disableDefaultUi: false
+                                }"
+                        ></GmapMap>
                     </v-col>
                 </v-row>            
                                 
@@ -42,6 +62,12 @@
                                 
             </v-col>
         </v-row>
+        <v-row >
+            <v-col cols="12" align="center">
+                <v-btn class="deep-orange" dark depressed @click.prevent="logIt">Book Now</v-btn>
+            </v-col>
+        </v-row>
+        
     </v-container>
 </template>
 
@@ -49,15 +75,41 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
+
 import db from '@/firebase/init'
+//import firebase from 'firebase'
 
 export default {
     name: 'SessionView',
-    created(){
-        
-       
+    data(){
+        return{
+            id:this.$route.params.id,
+            session:{},
+        }
+    },
+    methods:{
+        logIt(){
+            console.log(this.session.sessionTitle)
+        }
 
-    }, //end created
+    },
+    computed:{
+        currentSessions(){
+            return this.$store.state.sessions
+        }
+
+    },
+    mounted(){    
+       let ref = db.collection('sessions').doc(this.id).get().then( data =>
+       this.session = data.data()
+       )  
+    },//end mounted
+    created(){
+        console.log(this.id)
+
+    },
+
   
 }
 </script>

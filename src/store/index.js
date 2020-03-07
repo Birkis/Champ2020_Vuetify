@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     loadSessions(state, payload){
       state.sessions = payload
-    }
+    },
   },
   actions: {
     createSession ({commit}, payload) {
@@ -39,17 +39,17 @@ export default new Vuex.Store({
     },
     getSessions({commit}){
       let loadedSessions = []
+      db.collection('sessions').get().then(res => {
+        res.forEach(doc => {
+            db.collection('sessions').doc(doc.id).set({session_id:doc.id},{merge:true});             
+        })
+      })
       db.collection('sessions').get().then( data => {
         //data.forEach(doc => console.log(doc.data()))
         data.forEach(doc => loadedSessions.push(doc.data()))
       })
       commit('loadSessions', loadedSessions)
     },
-    getCurrentUser({commit}){
-      let loggedInUser = firebase.auth().currentUser
-      console.log(loggedInUser)
-      
-    }
   },
   modules: {
   }
@@ -58,3 +58,13 @@ export default new Vuex.Store({
 
 // lage en action som laster ned alle sessions fra Firebase. 
 // sende de til en mutation som setter State
+
+// db.collection('sessions').get().then(res => {
+//   res.forEach(doc => {
+//       db.collection('sessions').doc(doc.id).set({session_id:doc.id},{merge:true});             
+//   })
+// })
+// db.collection('sessions').get().then(res=>{
+//   res.forEach(doc => this.sessions.push(doc.data())
+//   )
+// }) 

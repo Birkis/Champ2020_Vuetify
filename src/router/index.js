@@ -33,6 +33,12 @@ const routes = [
     component: ProfileView
   },
   {
+    path:'/SessionView/:id',
+    name: 'SessionView',
+    component: SessionView,
+    props:true
+  },
+  {
     path:'/sessionslist',
     name: 'SessionsList',
     component: SessionsList

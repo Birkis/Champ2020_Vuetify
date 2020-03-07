@@ -5,9 +5,10 @@
                 <v-toolbar-title class="display-1" ><span class="font-weight-light">CHAMP</span><span class="font-weight-bold" >2020</span> 
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <router-link :to="{ name: 'Signup'}"><v-toolbar-title class="mx-3">Signup</v-toolbar-title></router-link>
+               
                      
-                <v-toolbar-title class="mx-3">Login</v-toolbar-title>      
+                <v-toolbar-title v-if="!loggedIn" class="mx-3"> <router-link :to="{ name: 'Signup'}">Login</router-link> </v-toolbar-title>  
+                <v-toolbar-title v-if="loggedIn" class="mx-3" @click.prevent="byeBye">Logout</v-toolbar-title>    
 
         </v-app-bar>    
 
@@ -32,6 +33,8 @@
 
 
 <script>
+import firebase from 'firebase'
+
 export default {
     data(){
         return{
@@ -42,12 +45,24 @@ export default {
                 {icon:'mdi-plus', name:'Create Session', route:'/createsession'},
                 {icon:'mdi-account-search-outline', name:'View Profiles', route:'/viewprofiles'},
                 {icon:'mdi-account-edit-outline', name:'Edit Profile', route:'/editprofile'},
-
-            ]
-
-
+            ],
+            loggedIn:false
         }
-    }
+    },//end data
+    methods:{
+        byeBye(){
+            // eslint-disable-next-line no-unused-vars
+            firebase.auth().signOut().then(data=>{
+                console.log('You were successfully logged out. ')
+            }).catch(err=> console.log(err))
+        }
+    },
+    mounted(){
+        if(firebase.auth().currentUser){
+            this.loggedIn=true
+        }
+        console.log(this.loggedIn, firebase.auth().currentUser)
+    },//end Mounted
 }
 </script>
 

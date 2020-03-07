@@ -8,6 +8,7 @@
                 <v-btn class="primary" @click.prevent="signUpFacebook" depressed>Sign Up With Facebook</v-btn>
             </v-col>
         </v-row>
+
     </v-container>
 </template>
 
@@ -28,7 +29,7 @@ export default {
             name:null,
             feedback:null,
             user_id:null,
-            profilePic:'http://someurl.com/picture.jpg'
+            profilePic:'http://someurl.com/picture.jpg',
         }
     },
     methods:{
@@ -39,18 +40,18 @@ export default {
                     const user = result.user;
                     // this.user_id = result.user.uid;
                     // Get user Objects and set auth values on the user  fortsette på .then()
-                    db.collection('users').doc(result.user.uid).set({
-                        name:result.user.displayName,
-                        email:result.user.email,
-                        user_id:result.user.uid,
-                        profilePic:result.user.photoURL
-                    }).then(()=> {
-                        this.$router.push({name:'home'})
+                    db.collection('users').doc(user.uid).set({
+                        name:user.displayName,
+                        email:user.email,
+                        user_id:user.uid,
+                        profilePic:user.photoURL
+                        }).then(()=> {
+                            this.$router.push({name:'home'})
                     })
                 }).catch(error =>{
                     let errorCode = error.code;
                 })
-            }
+            }//end signup Facebook
         }
     }
 </script>
