@@ -4,10 +4,10 @@
             <v-col v-for="session in sessions" :key="session.sessionTitle">
                 <v-card max-width="500" class="my-2">
                     <v-list-item>
-                    <v-list-item-avatar color="green"></v-list-item-avatar>
+                    <v-list-item-avatar color="green"> <img :src="session.hostPicture" alt="Host Avatar Photo"> </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline"> <router-link :to="{ name:'SessionView', params:{id:session.session_id}}">{{session.sessionTitle}}</router-link> </v-list-item-title>
-                        <v-list-item-subtitle><router-link :to="{ name:'ProfileView'}">{{session.hostName}}</router-link></v-list-item-subtitle>
+                        <v-list-item-subtitle><router-link :to="{ name:'ProfileView', params:{id:session.hostId}}">{{session.hostName}}</router-link></v-list-item-subtitle>
                     </v-list-item-content>
                     </v-list-item>
 
@@ -43,10 +43,15 @@ export default {
     props:['sessions'],
     data(){
         return{
+            hostName:null,
+            hostId:null,
+            hostProfilePic:null,
            
         }
     },
     mounted(){
+        
+
     }
 
 }

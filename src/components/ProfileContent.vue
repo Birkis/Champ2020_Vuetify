@@ -13,7 +13,7 @@
       <v-container>
         <v-row>
             <v-col>
-                <v-subheading class="grey--text">Motto</v-subheading>
+                <p class="grey--text">Motto</p>
             </v-col>
         </v-row>
         <v-row>
@@ -26,7 +26,7 @@
       <v-container>
         <v-row>
             <v-col>
-                <v-subheading class="grey--text">Education</v-subheading>
+                <p class="grey--text">Education</p>
             </v-col>
         </v-row>
         <v-row v-for="(school,index) in schools" :key="index">

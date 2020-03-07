@@ -28,7 +28,7 @@ const routes = [
     component: EditProfile
   },
   {
-    path:'/ProfileView',
+    path:'/ProfileView/:id',
     name: 'ProfileView',
     component: ProfileView
   },

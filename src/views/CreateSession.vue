@@ -90,7 +90,10 @@ export default {
                 lat:null,
                 lng:null,
                 placeName:null
-            }
+            },
+            hostName:null,
+            hostId:null,
+            hostPicture:null
         }
     },
     methods: {
@@ -118,23 +121,24 @@ export default {
                     lng:this.geoLocation.lng,
                     placeName:this.geoLocation.placeName
                 },
-                hostId:1,
-                hostName:'Michael'
+                hostId:this.hostId,
+                hostName:this.hostName,
+                hostPicture:this.hostPicture
             }).catch(error => {
                 console.log(error)
             })
             this.$router.push('/')
             
         },
-        onCreateSession () {        
-            const sessionData = {
-            sessionTitle: this.sessionTitle,
-            sessionDescription: this.sessionDescription,
-            hostName: 'Mikke Mus'
-            }
-            this.$store.dispatch('createSession', sessionData)
-            this.$router.push('/')
-        }
+        // onCreateSession () {        
+        //     const sessionData = {
+        //     sessionTitle: this.sessionTitle,
+        //     sessionDescription: this.sessionDescription,
+        //     hostName: 'Mikke Mus'
+        //     }
+        //     this.$store.dispatch('createSession', sessionData)
+        //     this.$router.push('/')
+        // }
     },
     computed: {
         interests(){
@@ -147,7 +151,14 @@ export default {
             })
             return activities
         }
-    }    
+    },//end computed
+    created(){
+        let ref = firebase.auth().currentUser
+        this.hostId = ref.uid
+        this.hostName = ref.displayName
+        this.hostPicture = ref.photoURL
+
+    }//end created    
 }
 
 //  db.collection('sessions').doc().set({

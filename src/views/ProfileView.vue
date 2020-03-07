@@ -4,13 +4,19 @@
           <v-col>
               <v-img class="align-end white--text" src="https://bit.ly/32DEtTK" height="300" gradient="to bottom, rgba(100,115,201,.33), rgba(25,32,72,.99)">
                 <v-row align="center">
-                    <v-avatar>
-                  <img src="https://bit.ly/2x0hRkF" alt="profile picture">
-              </v-avatar>
-                    <h1 class="display-1">Michael Birkeland</h1>
+                    <v-col cols="1" class="mx-5"> <!-- AVATAR   -->
+                        <v-avatar>
+                            <img :src="user.profilePic" alt="profile picture">
+                        </v-avatar>
+                    </v-col>
+                    <v-col cols="6">
+                        <h1 class="display-1">{{user.name}}</h1>
+                    </v-col>
                     <v-spacer></v-spacer>
-                    <v-rating v-model="rating" dense></v-rating>
-                    <v-icon color="teal">mdi-checkbox-marked-circle-outline</v-icon>
+                    <v-col cols="4">
+                        <v-rating v-model="rating" dense></v-rating>
+                        <v-icon color="teal">mdi-checkbox-marked-circle-outline</v-icon>
+                    </v-col>
                 </v-row>
               </v-img>
           </v-col>
@@ -33,15 +39,21 @@
              </v-tabs>
          </v-col>
       </v-row>
+      <p>{{user}}</p>
   </v-container>
 </template>
 
 <script>
+import db from '@/firebase/init'
+
 export default {
     name:'ProfileView',
+    props:[],
     data(){
         return {
             rating:3,
+            id:this.$route.params.id,
+            user:{}
 
         }
     },//end data
@@ -57,8 +69,12 @@ export default {
 
     },//end methods
     created(){
-
     },//end created
+    mounted(){
+        db.collection('users').doc(this.id).get().then( res =>{
+            this.user = res.data()
+        })
+    },
 }
 </script>
 
