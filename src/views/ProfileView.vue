@@ -14,7 +14,7 @@
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col cols="4">
-                        <v-rating v-model="rating" dense></v-rating>
+                        <v-rating v-model="user.hostRating" dense></v-rating>
                         <v-icon color="teal">mdi-checkbox-marked-circle-outline</v-icon>
                     </v-col>
                 </v-row>
@@ -26,20 +26,19 @@
              <v-tabs background-color="teal accent-4" class="elevation-2" grow dark>
                  <v-tab>Profile</v-tab>
                     <v-tab-item>
-                       <ProfileContent/>
+                       <ProfileContent :user="user"/>
                     </v-tab-item>
                  <v-tab>Sessions</v-tab>
                  <v-tab-item>
                     <SessionCard :sessions="sessions"/>
                  </v-tab-item>
-                 <v-tab>Testimonials</v-tab>
+                 <v-tab disabled>Testimonials</v-tab>
                  <v-tab-item>
                      <p> Some more text</p>
                  </v-tab-item>
              </v-tabs>
          </v-col>
       </v-row>
-      <p>{{user}}</p>
   </v-container>
 </template>
 
@@ -51,7 +50,6 @@ export default {
     props:[],
     data(){
         return {
-            rating:3,
             id:this.$route.params.id,
             user:{}
 
@@ -69,11 +67,12 @@ export default {
 
     },//end methods
     created(){
-    },//end created
-    mounted(){
         db.collection('users').doc(this.id).get().then( res =>{
             this.user = res.data()
         })
+    },//end created
+    mounted(){
+        
     },
 }
 </script>

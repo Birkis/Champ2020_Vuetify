@@ -6,6 +6,7 @@ import db from '@/firebase/init'
 
 Vue.use(Vuex)
 
+
 export default new Vuex.Store({
   
   state: {

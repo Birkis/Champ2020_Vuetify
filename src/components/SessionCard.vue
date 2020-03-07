@@ -45,15 +45,11 @@ export default {
         return{
             hostName:null,
             hostId:null,
-            hostProfilePic:null,
-           
+            hostProfilePic:null,         
         }
     },
     mounted(){
-        
-
     }
-
 }
 </script>
 

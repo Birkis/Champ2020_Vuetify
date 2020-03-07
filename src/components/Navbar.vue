@@ -54,14 +54,18 @@ export default {
             // eslint-disable-next-line no-unused-vars
             firebase.auth().signOut().then(data=>{
                 console.log('You were successfully logged out. ')
+                
             }).catch(err=> console.log(err))
         }
     },
     mounted(){
-        if(firebase.auth().currentUser){
-            this.loggedIn=true
-        }
-        console.log(this.loggedIn, firebase.auth().currentUser)
+        firebase.auth().onAuthStateChanged(user => {
+            if(user){
+                this.loggedIn=true;
+            }else{
+                this.loggedIn=false;
+            }
+        })
     },//end Mounted
 }
 </script>

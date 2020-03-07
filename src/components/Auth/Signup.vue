@@ -1,14 +1,52 @@
 <template>
-    <v-container>
-        <v-row>
-            <h1 class="display-1">Please Sign Up for Champ2020</h1>
+    <v-container fluid>
+       <v-container> <!-- Register with email -->
+          <v-form>
+            <v-row>
+               <v-col>
+                   <v-card class="mx-auto px-4"
+                            max-width="500px">
+                       
+                       <v-row justify="center">
+                           <v-card-title class="">CREATE A USER</v-card-title>
+                       </v-row>
+                       <v-row>
+                            <v-col>
+                                <v-text-field label="Your Email" type="email" v-model="email"></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                <v-text-field label="Your password" type="password" v-model="password"></v-text-field>
+                            </v-col>
+                       </v-row>
+                       <v-row justify="center">
+                           <v-col cols="4">
+                               <v-btn class="my-4" @click.prevent="signUpEmail(email,password)" dark>Register</v-btn>
+                           </v-col>
+                       </v-row>
+                   </v-card>
+               </v-col>
+            </v-row>
+          </v-form>
+
+
+       </v-container>
+       
+       
+       
+       <v-container> <!-- Facebook Login -->
+            <v-row justify="center">
+            <v-col cols="12">
+                <h1 class="display-1 text-center">Please Sign Up for Champ2020</h1>
+            </v-col>
         </v-row>
-        <v-row >
-            <v-col justify="center" cols="12">
+        <v-row justify="center">
+            <v-col cols="4">
                 <v-btn class="primary" @click.prevent="signUpFacebook" depressed>Sign Up With Facebook</v-btn>
             </v-col>
         </v-row>
-
+       </v-container>
     </v-container>
 </template>
 
@@ -33,6 +71,17 @@ export default {
         }
     },
     methods:{
+        signUpEmail(email,password){
+            firebase.auth().createUserWithEmailAndPassword(email,password).then( res => {
+                db.collection('users').doc(res.user.uid).set({
+                    email:res.user.email
+                })
+            }).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message; 
+            });
+        },
         signUpFacebook(){
                 const provider = new firebase.auth.FacebookAuthProvider();
                 firebase.auth().signInWithPopup(provider).then(result =>{

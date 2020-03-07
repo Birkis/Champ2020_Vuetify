@@ -1,13 +1,13 @@
 <template>
   <v-container>
       <v-container>
-           <v-row justify="start">
-          <v-col v-for="tag in tags" :key="tag" cols="3">
-              <v-chip-group column>
-                  <v-chip>{{tag}}</v-chip>
-              </v-chip-group>
-          </v-col>
-      </v-row>
+          <v-chip-group column>
+            <v-row justify="start">
+                <v-col v-for="tag in user.interests" :key="tag" cols="2">
+                        <v-chip class="mx-1" >{{tag}}</v-chip>
+                </v-col>
+            </v-row>
+      </v-chip-group>
       </v-container>
       <v-divider></v-divider>
       <v-container>
@@ -18,7 +18,7 @@
         </v-row>
         <v-row>
             <v-col>
-                <p>{{motto}}</p>
+                <p>{{user.motto}}</p>
             </v-col>
         </v-row>
       </v-container>
@@ -48,6 +48,7 @@
 /* eslint-disable no-unused-vars */
 export default {
     name:'ProfileContent',
+    props:['user'],
     data(){
         return{
             motto:'Det er i oppoverbakke det blir vanskelig',
