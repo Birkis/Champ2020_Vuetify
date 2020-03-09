@@ -113,7 +113,17 @@ export default {
                     startTime:this.sessionTime.startTime,
                     duration:this.sessionTime.duration
                 },
-                attendees:this.attendees,
+                attendees:{
+                    available:this.attendees,
+                    //legg til en booked-sak
+                    booked:[
+                        {
+                        id:null,
+                        name:'',
+                        timeStamp:null
+                        }
+                        ],
+                    },
                 price:this.price,
                 interestValues:this.interestValues,
                 geoLocation:{

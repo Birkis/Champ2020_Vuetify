@@ -108,7 +108,8 @@ export default {
         this.$refs.menu.save(date)
       },
       updateUser(){
-          db.collection('users').doc(this.loggedInUser.user_id).update({
+          let user = firebase.auth().currentUser
+          db.collection('users').doc(user.uid).update({
               dob: this.date,
               gender: this.genderValue,
               interests: this.interestValues,

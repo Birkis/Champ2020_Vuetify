@@ -8,6 +8,7 @@ import ProfilesList from '@/views/ProfilesList'
 import SessionView from '@/views/SessionView'
 import Signup from '@/components/Auth/Signup'
 import ProfileView from '@/views/ProfileView'
+import Login from '@/components/Auth/Login'
 
 Vue.use(VueRouter)
 
@@ -52,6 +53,11 @@ const routes = [
     path: '/sessionview',
     name: 'SessionView',
     component: SessionView
+  },
+  {
+    path:'/login',
+    name:'Login',
+    component: Login
   },
   {
     path: '/signup',
