@@ -116,6 +116,7 @@ export default {
               postcode: this.loggedInUser.postcode,
               motto: this.loggedInUser.motto,
               goal: this.loggedInUser.goal,
+              name: this.loggedInUser.name
           })
       }
     },

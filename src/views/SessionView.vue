@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid>
+    <v-container fluid v-if="session.session_id !== undefined">
         <v-row justify="center" > <!-- Headerbilde med tekst -->
             <v-col cols="12"> 
                 <v-img height="500" gradient="to bottom, rgba(100,115,201,.1), rgba(25,32,72,.79)" class="align-end" src="https://images.complex.com/complex/image/upload/c_fill,dpr_auto,q_90,w_920/fl_lossy,pg_1/NBA-Off-Season-Training_Lead_1_g2ylen.jpg">
@@ -25,7 +25,7 @@
                 </v-chip-group>
                 <v-row no-gutters>
                     <v-col cols="5">
-                        <v-card-subtitle>Spots available: 1 of {{session.attendees.available}}</v-card-subtitle>
+                        <v-card-subtitle>Spots available: {{session.booked.length}} of {{session.attendees}}</v-card-subtitle>
                         <v-card-subtitle>{{session.geoLocation.placeName}}</v-card-subtitle>
                     </v-col>
                     <v-col cols="4"> 
@@ -60,11 +60,11 @@
         </v-row>
             
         </v-row>
-        <v-row justify="center" > <!-- Book Button -->
+        <v-row justify="center" v-if="user" > <!-- Book Button -->
             <v-col cols="4">
-                <v-btn class="deep-orange" dark depressed @click.prevent="bookSession">Book Now</v-btn>
+                <v-btn class=""  @click.prevent="bookSession" :disabled="bookingDisabled">Book Now</v-btn>
             </v-col>
-        </v-row>
+        </v-row>        
         
     </v-container>
 </template>
@@ -83,47 +83,78 @@ export default {
     data(){
         return{
             id:this.$route.params.id,
-            session:{},
+            session:{booked: []},
+            bookingDisabled:false,
+            isBooked: false,
+            isFull:false,
+            user:null
         }
     },
     methods:{
         checkingStuff(){
-            let user = firebase.auth().currentUser
-            console.log(['somethig','something else'].includes(user.uid))
+            console.log('nothing to see here')
         },
         bookSession(){
-            let user = firebase.auth().currentUser
-            db.collection('sessions').doc(this.session.session_id).update({
+            //Check if isBooked is true. 
+                db.collection('sessions').doc(this.session.session_id).update({
                     booked: firebase.firestore.FieldValue.arrayUnion(
                         {
-                            id:user.uid,
+                            id:this.user.uid,
                             date:Date.now()   
                         })}
-            )//end Firebase update
-            db.collection('sessions').doc(this.sessions.session_id).get().then( res => {
-                console.log(res.attendees.booked.length)
-                })//end length check
-            },//end book session
-        checkBookings(){       
-        },//end check bookings
+                )//end Firebase update of booking info
+                this.bookingDisabled=true
+        },//end book session
+        checkBookingStatus(){
+            let user = firebase.auth().currentUser
+            function hasBooked(booked){
+                    return booked.id === user.uid
+                } 
+            this.isBooked = this.session.booked.some(hasBooked)
+            if (this.isBooked){
+                this.bookingDisabled=true
+            }
+        },
+        disableBooking(){
+            if(this.isBooked)
+            {this.bookingDisabled = true}
+        }
     },
     computed:{
-        currentSessions(){
-            return this.$store.state.sessions
+    },
+    watch:{
+        // session:{
+        //     handler:'checkBookingStatus'
+        // }
+
+        isBooked:{
+            handler:'disableBooking'
         }
 
-    },
-    mounted(){    
-       db.collection('sessions').doc(this.id).get().then( data =>
-       this.session = data.data()
-       )  
+    },//end watch
+    mounted(){   
+        //this.user = firebase.auth().currentUser 
+        //this.checkBookingStatus()
     },//end mounted
     created(){
-        console.log(this.id)
+        
+        db.collection('sessions').doc(this.id).get().then( data => {
+            Object.keys(data.data()).forEach( res => {
+               this.session = data.data()
+            })
+        }).then(()=>{
+            this.user = firebase.auth().currentUser
+        }).then(() =>{
+            let user = firebase.auth().currentUser
+            function hasBooked(booked){
+                    return booked.id === user.uid
+                } 
+            this.isBooked = this.session.booked.some(hasBooked)
+        
+        })
+        
 
-    },
-
-  
+    },//end created
 }
 </script>
 
@@ -132,3 +163,26 @@ export default {
 
 
 </style>
+
+// .then(() => {
+//   this.data = whatever
+//   dinFunksjon()
+// })
+
+// .then(()=>{
+//             this.user = firebase.auth().currentUser
+//             function hasBooked(booked){
+//                     return booked.id === this.user.uid
+//                 } 
+//             this.isBooked = this.session.booked.some(hasBooked)
+//             if (this.session.booked.length>=this.session.attendees){
+//                     this.isFull = true
+//             }else{
+//                     this.isFull = false
+//                     }
+//             if(this.isBooked || this.isFull){
+//                 this.bookingDisabled = true
+//             }
+//         }
+            
+//         )

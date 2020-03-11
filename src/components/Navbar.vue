@@ -6,7 +6,7 @@
                                     <v-toolbar-title class="display-1" ><span class="font-weight-light">CHAMP</span><span class="font-weight-bold" >2020</span></v-toolbar-title>
                 </router-link>
                 <v-spacer></v-spacer>
-                <p>build: 0.2</p>
+                <p>build: 0.3</p>
                 <v-spacer></v-spacer>
                 <v-toolbar-title> {{loggedInEmail}} </v-toolbar-title>
                 <v-spacer></v-spacer>

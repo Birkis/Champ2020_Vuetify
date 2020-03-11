@@ -17,7 +17,8 @@ export default new Vuex.Store({
                    {activity:'Yoga', activityImg:'https://bit.ly/38201dI'},
                    {activity:'Golf', activityImg:'https://bit.ly/38201dI'},
                    {activity:'Running', activityImg:'https://bit.ly/38201dI'}],
-    loggedInUser:null
+    loggedInUser:null,
+    currentSession:{}
     
   },//end state
     
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    //brukes ikke - Sender rett til Firebase fra CreateSession
     createSession ({commit}, payload) {
       const sessions = {
         sessionTitle: payload.sessionTitle,

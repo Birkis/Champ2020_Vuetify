@@ -113,17 +113,8 @@ export default {
                     startTime:this.sessionTime.startTime,
                     duration:this.sessionTime.duration
                 },
-                attendees:{
-                    available:this.attendees,
-                    //legg til en booked-sak
-                    booked:[
-                        {
-                        id:null,
-                        name:'',
-                        timeStamp:null
-                        }
-                        ],
-                    },
+                attendees:this.attendees,
+                booked:[],  
                 price:this.price,
                 interestValues:this.interestValues,
                 geoLocation:{
@@ -133,7 +124,8 @@ export default {
                 },
                 hostId:this.hostId,
                 hostName:this.hostName,
-                hostPicture:this.hostPicture
+                hostPicture:this.hostPicture,
+                timeStamp:Date.now()
             }).catch(error => {
                 console.log(error)
             })
@@ -170,24 +162,6 @@ export default {
 
     }//end created    
 }
-
-//  db.collection('sessions').doc().set({
-//                         host_id: user_id,
-//                         title:this.title,
-//                         description:this.description,
-//                         sessionStart:this.sessionStart,
-//                         duration:this.duration,
-//                         spots:this.spots,
-//                         price:this.price,
-//                         category:this.category,
-//                         location:this.location,
-//                         host_name,
-//                         host_pic,
-//                         timestamp
-//                     }).then(()=> {
-//                         this.$router.push({name:'Home'})
-//                     })
-
 </script>
 
 <style scoped>
