@@ -8,12 +8,12 @@ Vue.use(Vuex)
 
 
 export default new Vuex.Store({
-  
   state: {
     sessions:[],
     interests:['basketball', 'yoga', 'running', 'windsurfing', 'bodybuilding','golf','Lacrosse','Strength','Pumping Iron', 'Rugby'],
     genderTypes: ['male','female','not your business'],
-    activityList: [{activity:'Basketball', activityImg:'https://bit.ly/38201dI'},
+    activityList: [
+                   {activity:'Basketball', activityImg:'https://bit.ly/38201dI'},
                    {activity:'Yoga', activityImg:'https://bit.ly/38201dI'},
                    {activity:'Golf', activityImg:'https://bit.ly/38201dI'},
                    {activity:'Running', activityImg:'https://bit.ly/38201dI'},
@@ -79,3 +79,4 @@ export default new Vuex.Store({
 })//ends Vuex.store
 
 //La til GIT HUB
+//git push origin master -f
