@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col v-for="session in sessions" :key="session.sessionTitle">
+            <v-col v-for="(session,index) in sessions" :key="index">
                 <v-card max-width="500" class="my-2">
                     <v-list-item>
                     <v-list-item-avatar color="green"> <img :src="session.hostPicture" alt="Host Avatar Photo"> </v-list-item-avatar>

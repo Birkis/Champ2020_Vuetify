@@ -74,13 +74,16 @@ export default {
         signUpEmail(email,password){
             firebase.auth().createUserWithEmailAndPassword(email,password).then( res => {
                 db.collection('users').doc(res.user.uid).set({
-                    email:res.user.email
+                    email:res.user.email,
+                    user_id:res.user.uid,
                 })
             }).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message; 
             });
+            this.$router.push({name:'home'})
+
         },
         signUpFacebook(){
                 const provider = new firebase.auth.FacebookAuthProvider();

@@ -11,7 +11,7 @@
               </v-tab-item>
             <v-tab>Trainers</v-tab>
               <v-tab-item>
-                <p> Trainers will show here</p>
+                <ProfileCard :users="users"/>
               </v-tab-item>
           </v-tabs>
     </v-container>
@@ -21,7 +21,7 @@
 
 // @ is an alias to /src
 //import firebase from 'firebase'
-import db from '@/firebase/init'
+import {mapState} from 'vuex'
 
 export default {
   name: 'home',
@@ -32,23 +32,12 @@ export default {
    
     }
   },
-  computed:{
-    sessions(){
-      return this.$store.state.sessions
-    }
-  }, //ends computed
+  computed:mapState(['sessions', 'users']), //ends computed
   methods:{
   }, // ends methods
   mounted(){
-    
-
   },//Ends Mounted
   created(){
-    // dispatch en kommando til Store om å laste ned alle 
-
-    
-    this.$store.dispatch('getSessions')
-    //this.$store.dispatch('getCurrentUser')
   }
 }
 </script>

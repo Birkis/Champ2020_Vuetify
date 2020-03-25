@@ -104,7 +104,8 @@ export default {
             this.geoLocation.placeName = place.name
         },
         saveData(){
-            db.collection('sessions').doc().set({
+            let ID = Math.random().toString(16).substr(2,12)
+            db.collection('sessions').doc(ID).set({
                 sessionTitle:this.sessionTitle,
                 sessionDescription:this.sessionDescription,
                 activity:this.activity,
@@ -125,22 +126,14 @@ export default {
                 hostId:this.hostId,
                 hostName:this.hostName,
                 hostPicture:this.hostPicture,
-                timeStamp:Date.now()
+                timeStamp:Date.now(),
+                session_id:ID
             }).catch(error => {
                 console.log(error)
             })
             this.$router.push('/')
             
         },
-        // onCreateSession () {        
-        //     const sessionData = {
-        //     sessionTitle: this.sessionTitle,
-        //     sessionDescription: this.sessionDescription,
-        //     hostName: 'Mikke Mus'
-        //     }
-        //     this.$store.dispatch('createSession', sessionData)
-        //     this.$router.push('/')
-        // }
     },
     computed: {
         interests(){
@@ -162,8 +155,44 @@ export default {
 
     }//end created    
 }
-</script>
 
+
+
+
+//KOPI AV SAVEDATA() I TILFELLE 
+
+// saveData(){
+//     db.collection('sessions').doc().set({
+//         sessionTitle:this.sessionTitle,
+//         sessionDescription:this.sessionDescription,
+//         activity:this.activity,
+//         sessionTime:{
+//             startDate:this.sessionTime.startDate,
+//             startTime:this.sessionTime.startTime,
+//             duration:this.sessionTime.duration
+//         },
+//         attendees:this.attendees,
+//         booked:[],  
+//         price:this.price,
+//         interestValues:this.interestValues,
+//         geoLocation:{
+//             lat:this.geoLocation.lat,
+//             lng:this.geoLocation.lng,
+//             placeName:this.geoLocation.placeName
+//         },
+//         hostId:this.hostId,
+//         hostName:this.hostName,
+//         hostPicture:this.hostPicture,
+//         timeStamp:Date.now()
+//     }).catch(error => {
+//         console.log(error)
+//     })
+//     this.$router.push('/')
+
+
+
+
+</script>
 <style scoped>
 
  .gPlaces{

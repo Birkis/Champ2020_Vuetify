@@ -25,6 +25,8 @@ export default {
     }
   },
   created(){
+    this.$store.dispatch('getSessions')
+    this.$store.dispatch('getUsers')
   }
  
 };

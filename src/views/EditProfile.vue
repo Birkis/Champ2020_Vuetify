@@ -1,14 +1,19 @@
 <template>
     <v-container fluid>
-        <v-row align="center" justify="center" > <!-- Heading -->
-            <v-col cols="1">
-                <v-avatar class=""> <img :src="loggedInUser.profilePic" alt=""> </v-avatar>
-            </v-col>
-            <v-col cols="8">
-               <v-text-field class="display-1" v-model="loggedInUser.name">Edit your profile here</v-text-field>
-            </v-col>
-        </v-row>
-        <v-form> <!-- All Form Inputs -->
+        <v-form>
+            <v-row align="center" justify="end" > <!-- Heading -->
+                <v-col cols="2">
+                    <UploadProfilePic/>
+                </v-col>
+                <v-col cols="2">
+                    <v-avatar class=""> <img :src="loggedInUser.profilePic" alt=""> </v-avatar>
+                </v-col>
+               
+                <v-col cols="7">
+                <v-text-field class="display-1" v-model="loggedInUser.name">Edit your profile here</v-text-field>
+                </v-col>
+            </v-row>
+         <!-- All Form Inputs -->
             <v-row> <!-- Edit Email -->
                 <v-col cols="12" sm="6" m4="4">
                     <v-text-field label="Email" type="email" v-model="loggedInUser.email"></v-text-field>
@@ -72,16 +77,22 @@
 
 import firebase from 'firebase'
 import db from '@/firebase/init'
+import UploadProfilePic from '@/components/UploadProfilePic'
 
 export default {
     name:'EditProfile',
+    components:{
+        UploadProfilePic
+    },
     data(){
         return{
+            profilePic:null,
             genderValue:null,
             interestValues:null,
             date:null,
             menu:false,
             loggedInUser:{},
+           
         }
     },
     computed:{

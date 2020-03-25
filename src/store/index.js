@@ -16,58 +16,64 @@ export default new Vuex.Store({
     activityList: [{activity:'Basketball', activityImg:'https://bit.ly/38201dI'},
                    {activity:'Yoga', activityImg:'https://bit.ly/38201dI'},
                    {activity:'Golf', activityImg:'https://bit.ly/38201dI'},
-                   {activity:'Running', activityImg:'https://bit.ly/38201dI'}],
+                   {activity:'Running', activityImg:'https://bit.ly/38201dI'},
+                   {activity:'koding', activityImg:'https://bit.ly/38201dI'},
+                   {activity:'klatring', activityImg:'https://bit.ly/38201dI'}
+                  ],
     loggedInUser:null,
-    currentSession:{}
+    users:[],
+    currentSession:{},
     
   },//end state
-    
   mutations: {
-    createSession (state, payload) {
-    state.sessions.push(payload)
-    },
-    loadSessions(state, payload){
-      state.sessions = payload
-    },
-  },
-  actions: {
-    //brukes ikke - Sender rett til Firebase fra CreateSession
-    createSession ({commit}, payload) {
-      const sessions = {
-        sessionTitle: payload.sessionTitle,
-        hostName: payload.hostName,
-        sessionDescription: payload.sessionDescription
+      SET_SESSIONS(state, payload){
+        state.sessions = payload
+      },
+      SET_USERS(state,payload){
+        state.users = payload
       }
-      commit('createSession', sessions)
-    },
-    getSessions({commit}){
-      let loadedSessions = []
-      db.collection('sessions').get().then(res => {
-        res.forEach(doc => {
-            db.collection('sessions').doc(doc.id).set({session_id:doc.id},{merge:true});             
+  },//end mutations
+  actions: {
+ 
+      //henter sessions med onSnapshot - filtrerer ut sessions som allerede eksisterer i State
+      getSessions({commit}){
+        let payload = []      
+        let ref = db.collection('sessions')
+        ref.onSnapshot( snap =>{
+          snap.forEach( res =>{
+            const ID = res.data().session_id
+            const foundItem = this.state.sessions.find( ({session_id}) => {
+              return session_id === ID            
+              })//end find
+            if(foundItem===undefined){
+              payload.push(res.data())
+            }else{
+              console.log('Session with title '+ foundItem.sessionTitle + ' already in the State')
+            }
+            //payload.push(res.data())
+          })
         })
-      })
-      db.collection('sessions').get().then( data => {
-        //data.forEach(doc => console.log(doc.data()))
-        data.forEach(doc => loadedSessions.push(doc.data()))
-      })
-      commit('loadSessions', loadedSessions)
-    },
-  },
-  modules: {
+        commit('SET_SESSIONS', payload)
+      },
+      //henter ut users med onSnapshot - Filtrerer vekk brukere som allerede eksisterer i State
+      getUsers({commit}){
+        let payload = []
+        let ref = db.collection('users')
+        ref.onSnapshot( snap => {
+          snap.forEach( res => {
+            const ID = res.data().user_id
+            const foundItem = this.state.users.find( ({user_id}) => {
+              return user_id === ID            
+              })//end find
+            if(foundItem===undefined){
+              payload.push(res.data())
+            }else{
+              console.log('User with ID '+ foundItem.user_id + ' already in the database')
+            }
+            //payload.push(res.data())
+            })//end forEach
+        })
+        commit('SET_USERS', payload)
+      }
   }
-})
-
-
-// lage en action som laster ned alle sessions fra Firebase. 
-// sende de til en mutation som setter State
-
-// db.collection('sessions').get().then(res => {
-//   res.forEach(doc => {
-//       db.collection('sessions').doc(doc.id).set({session_id:doc.id},{merge:true});             
-//   })
-// })
-// db.collection('sessions').get().then(res=>{
-//   res.forEach(doc => this.sessions.push(doc.data())
-//   )
-// }) 
+})//ends Vuex.store

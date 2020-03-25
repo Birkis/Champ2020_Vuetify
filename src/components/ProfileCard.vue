@@ -1,11 +1,11 @@
 <template>
 <v-container grid-list-xs>
          <v-row>
-            <v-col v-for="user in users" :key="user.name">
+            <v-col v-for="(user,index) in users" :key="index">
                <v-card
                     max-width="300"
                     class="mx-auto"
-                >
+                      >
                     
                     
                     <v-img
