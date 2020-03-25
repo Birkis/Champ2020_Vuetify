@@ -77,3 +77,5 @@ export default new Vuex.Store({
       }
   }
 })//ends Vuex.store
+
+//La til GIT HUB
