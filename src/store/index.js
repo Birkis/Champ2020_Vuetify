@@ -80,3 +80,9 @@ export default new Vuex.Store({
 
 //La til GIT HUB
 //git push origin master -f
+
+//## HVORDAN LEGGE OPP TIL GIT ##
+// git remote add origin <LINK>
+// git push origin master
+// git push <REMOTE> <BRANCH>
+// git push origin master -f
