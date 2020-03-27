@@ -2,7 +2,7 @@
   <div class="about">
     <h1>This is an about page</h1>
 
-    <input type="file" @change="onFileSelected">
+    <input type="file" @change="saveImage">
     <img :src="url" alt="">
 
   </div>
@@ -19,7 +19,7 @@ export default {
   data(){
     return {
       url:'',
-      file:null
+      //file:null
  
     }
   },
@@ -30,7 +30,7 @@ export default {
     logThings(){
       console.log(this.file)
       },
-    onFileSelected(event){
+    saveImage(event){
       const file = event.target.files[0]
       const storageRef = firebase.storage().ref();
       const task = storageRef.child(file.name).put(file).then( snapshot=>{
@@ -38,12 +38,6 @@ export default {
             this.url = res
           })
       })
-      
-      
-      
-      //this.url = task.snapshot.ref.getDownloadURL()
-
-      
     }
   },
 

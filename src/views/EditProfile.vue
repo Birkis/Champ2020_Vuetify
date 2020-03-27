@@ -1,9 +1,9 @@
 <template>
     <v-container fluid>
         <v-form>
-            <v-row align="center" justify="end" > <!-- Heading -->
-                <v-col cols="2">
-                    <UploadProfilePic/>
+            <v-row align="center" justify="start" > <!-- Heading -->
+                <v-col cols="1">
+                    <UploadProfilePic v-on:updateUrl="updateUrl($event)"/>
                 </v-col>
                 <v-col cols="2">
                     <v-avatar class=""> <img :src="loggedInUser.profilePic" alt=""> </v-avatar>
@@ -67,7 +67,13 @@
                     <v-btn color="deep-orange" class="white--text" depressed @click.prevent="updateUser">Update Info</v-btn>
                 </v-col>
             </v-row>
+            <v-row>
+                <v-col>
+                     <img :src="url" alt="">
+                </v-col>
+            </v-row>
          </v-form>
+        
     </v-container>  
 </template>
 
@@ -92,6 +98,7 @@ export default {
             date:null,
             menu:false,
             loggedInUser:{},
+            url:'',
            
         }
     },
@@ -128,6 +135,13 @@ export default {
               motto: this.loggedInUser.motto,
               goal: this.loggedInUser.goal,
               name: this.loggedInUser.name
+          })
+      },
+      updateUrl(newUrl){
+          this.url = newUrl
+          let user = firebase.auth().currentUser
+          db.collection('users').doc(user.uid).update({
+              profilePic: newUrl
           })
       }
     },

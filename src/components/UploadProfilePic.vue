@@ -3,19 +3,13 @@
       <v-col cols="2">
         <v-dialog
         v-model="dialog"
-        width="500"
+        width="300"
             >
             <template v-slot:activator="{ on }">
-                <v-avatar
-                    v-on="on"
-                    size="60"
-                    color="red"
-                >
-                    <img src="https://bit.ly/39j0x7I" alt="alt">
-                </v-avatar>
+                <v-icon  v-on="on">mdi-plus</v-icon>
             </template>
 
-            <v-card>
+            <v-card class="uploadCard">
                 <v-card-title
                 class="headline grey lighten-2"
                 primary-title
@@ -24,21 +18,17 @@
                 </v-card-title>
 
                 <v-divider></v-divider>
-
-                    <v-file-input
-                        :rules="rules"
-                        accept="image/png, image/jpeg, image/bmp"
-                        placeholder="Pick an avatar"
-                        prepend-icon="mdi-camera"
-                        label="Avatar"
-                    ></v-file-input>
+                <input class="avatarUpload" type="file" @change="saveImage">
             </v-card>
         </v-dialog>
-      </v-col>
+        </v-col>
   </v-row>
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
+import firebase from 'firebase'
+
     export default {
         data(){
             return{
@@ -46,12 +36,45 @@
                 rules: [
                 value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
                 ],
+                url:'',
 
             }
-        }//end data
+        },//end data
+        methods:{
+            saveImage(event){
+                const file = event.target.files[0]
+                const storageRef = firebase.storage().ref();
+                const task = storageRef.child(file.name).put(file).then( snapshot=>{
+                    snapshot.ref.getDownloadURL().then(res =>{
+                        this.url = res
+                        }).then(()=>{
+                            this.$emit('updateUrl',this.url)
+                        })
+                    })
+                
+                
+                }
+
+        }
     }
 </script>
 
 <style scoped>
+
+
+
+.avatarUpload{
+    padding: 15px;
+}
+
+input.avatarUpload{
+    color:lightgray;
+}
+
+.avatarUpload::-webkit-file-upload-button{
+    color: slategrey;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
 
 </style>
