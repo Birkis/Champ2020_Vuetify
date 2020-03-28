@@ -1,5 +1,12 @@
 <template>
     <v-container fluid>
+        <v-row>
+            <v-col>
+                <v-alert v-model="alert" type="success" dense dismissible>
+                        <p >{{message}}</p>   
+                </v-alert>
+            </v-col>
+        </v-row>
         <v-form>
             <v-row align="center" justify="start" > <!-- Heading -->
                 <v-col cols="1">
@@ -99,7 +106,8 @@ export default {
             menu:false,
             loggedInUser:{},
             url:'',
-           
+            message:'',
+            alert:false        
         }
     },
     computed:{
@@ -120,6 +128,9 @@ export default {
       menu (val) {
         val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
       },
+      message(x){
+          console.log('this is what message sees' + x)
+      }
     },
     methods: {
       save (date) {
@@ -135,10 +146,12 @@ export default {
               motto: this.loggedInUser.motto,
               goal: this.loggedInUser.goal,
               name: this.loggedInUser.name
+          }).then(() => {
+              this.message='Profile has been updated'
+              this.alert = true
           })
       },
       updateUrl(newUrl){
-          this.url = newUrl
           let user = firebase.auth().currentUser
           db.collection('users').doc(user.uid).update({
               profilePic: newUrl

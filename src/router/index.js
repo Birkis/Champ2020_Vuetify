@@ -31,7 +31,8 @@ const routes = [
   {
     path:'/ProfileView/:id',
     name: 'ProfileView',
-    component: ProfileView
+    component: ProfileView,
+    //props:true
   },
   {
     path:'/SessionView/:id',

@@ -77,9 +77,9 @@
 import * as firebase from 'firebase';
 import db from '@/firebase/init'
 
-
 export default {
     name: 'SessionView',
+    props:[],
     data(){
         return{
             id:this.$route.params.id,
@@ -91,9 +91,6 @@ export default {
         }
     },
     methods:{
-        checkingStuff(){
-            console.log('nothing to see here')
-        },
         bookSession(){
             //Check if isBooked is true. 
                 db.collection('sessions').doc(this.session.session_id).update({
@@ -123,21 +120,13 @@ export default {
     computed:{
     },
     watch:{
-        // session:{
-        //     handler:'checkBookingStatus'
-        // }
-
         isBooked:{
             handler:'disableBooking'
         }
-
     },//end watch
     mounted(){   
-        //this.user = firebase.auth().currentUser 
-        //this.checkBookingStatus()
     },//end mounted
-    created(){
-        
+    created(){    
         db.collection('sessions').doc(this.id).get().then( data => {
             Object.keys(data.data()).forEach( res => {
                this.session = data.data()
@@ -150,10 +139,7 @@ export default {
                     return booked.id === user.uid
                 } 
             this.isBooked = this.session.booked.some(hasBooked)
-        
         })
-        
-
     },//end created
 }
 </script>

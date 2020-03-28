@@ -11,6 +11,11 @@
                            <v-card-title class="">CREATE A USER</v-card-title>
                        </v-row>
                        <v-row>
+                           <v-col>
+                               <v-text-field label="Your Full Name" type="text" v-model="name"></v-text-field>
+                           </v-col>
+                       </v-row>
+                       <v-row>
                             <v-col>
                                 <v-text-field label="Your Email" type="email" v-model="email"></v-text-field>
                             </v-col>
@@ -67,20 +72,24 @@ export default {
             name:null,
             feedback:null,
             user_id:null,
-            profilePic:'http://someurl.com/picture.jpg',
+            profilePic:'https://bit.ly/2WQW5KW',
         }
     },
     methods:{
         signUpEmail(email,password){
+            
             firebase.auth().createUserWithEmailAndPassword(email,password).then( res => {
                 db.collection('users').doc(res.user.uid).set({
+                    name:this.name,
                     email:res.user.email,
                     user_id:res.user.uid,
+                    profilePic:this.profilePic
                 })
             }).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
-                var errorMessage = error.message; 
+                var errorMessage = error.message;
+                console.log(errorMessage) 
             });
             this.$router.push({name:'home'})
 

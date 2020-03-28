@@ -52,7 +52,7 @@
 
 <script>
 import firebase from 'firebase'
-import db from '@/firebase/init'
+//import db from '@/firebase/init'
 
 export default {
     name:'Login',
@@ -81,21 +81,10 @@ export default {
         }, //end signup Email
         signUpFacebook(){
                 const provider = new firebase.auth.FacebookAuthProvider();
-                firebase.auth().signInWithPopup(provider).then(result =>{
-                    const user = result.user;
-                    // this.user_id = result.user.uid;
-                    // Get user Objects and set auth values on the user  fortsette på .then()
-                    db.collection('users').doc(user.uid).update({
-                        name:user.displayName,
-                        email:user.email,
-                        user_id:user.uid,
-                        profilePic:user.photoURL
-                        }).then(()=> {
-                            this.$router.push({name:'home'})
-                    })
-                }).catch(error =>{
+                firebase.auth().signInWithPopup(provider).catch(error =>{
                     console.log(error.code)
                 })
+                this.$router.push({name:'home'})
             }
     },//end methods
     computed:{

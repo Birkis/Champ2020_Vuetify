@@ -17,7 +17,7 @@
                     <v-list-item>
                     <v-list-item-avatar color="grey" size="55"><v-img :src="user.profilePic"></v-img></v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title class="headline white--text">{{user.name}}</v-list-item-title>
+                        <v-list-item-title class="headline white--text"><router-link :to="{ name:'ProfileView', params:{id:user.user_id}}" >{{user.name}}</router-link></v-list-item-title>
                         <v-rating v-if="!null" dense v-model="rating"></v-rating>
                     </v-list-item-content>
                     </v-list-item>
