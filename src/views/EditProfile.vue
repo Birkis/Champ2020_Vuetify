@@ -9,10 +9,8 @@
         </v-row>
         <v-form>
             <v-row align="center" justify="start" > <!-- Heading -->
-                <v-col cols="1">
-                    <UploadProfilePic v-on:updateUrl="updateUrl($event)"/>
-                </v-col>
                 <v-col cols="2">
+                    <UploadProfilePic class="addnewimage" v-on:updateUrl="updateUrl($event)"/>
                     <v-avatar class=""> <img :src="loggedInUser.profilePic" alt=""> </v-avatar>
                 </v-col>
                
@@ -72,11 +70,6 @@
             <v-row justify="center">  <!-- Submit button -->
                 <v-col cols="3"> 
                     <v-btn color="deep-orange" class="white--text" depressed @click.prevent="updateUser">Update Info</v-btn>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col>
-                     <img :src="url" alt="">
                 </v-col>
             </v-row>
          </v-form>
@@ -174,6 +167,13 @@ export default {
 }
 </script>
 <style scoped>
+
+.addnewimage{
+    position: absolute;
+    top:65px;
+    left: 35px;
+    z-index: 3;
+}
 </style>
 
 

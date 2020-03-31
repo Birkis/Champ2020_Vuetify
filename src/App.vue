@@ -27,6 +27,7 @@ export default {
   created(){
     this.$store.dispatch('getSessions')
     this.$store.dispatch('getUsers')
+    this.$store.dispatch('getCategories')
   }
  
 };

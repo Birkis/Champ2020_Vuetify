@@ -9,6 +9,7 @@ import SessionView from '@/views/SessionView'
 import Signup from '@/components/Auth/Signup'
 import ProfileView from '@/views/ProfileView'
 import Login from '@/components/Auth/Login'
+import AddInterests from '@/views/AddInterests'
 
 Vue.use(VueRouter)
 
@@ -64,6 +65,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup
+  },
+  {
+    path: '/add-interests',
+    name: 'AddInterests',
+    component: AddInterests
   },
   {
     path: '/about',

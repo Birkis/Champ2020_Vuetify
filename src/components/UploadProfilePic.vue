@@ -6,9 +6,8 @@
         width="300"
             >
             <template v-slot:activator="{ on }">
-                <v-icon  v-on="on">mdi-plus</v-icon>
+                <v-icon  v-on="on">mdi-pencil</v-icon>
             </template>
-
             <v-card class="uploadCard">
                 <v-card-title
                 class="headline grey lighten-2"
@@ -61,6 +60,10 @@ import firebase from 'firebase'
 
 <style scoped>
 
+.mdi-pencil:before{
+    color: lightgray;
+    text-shadow: 1px 1px 5px #252525;
+}
 
 
 .avatarUpload{

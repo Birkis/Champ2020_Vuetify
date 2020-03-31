@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 <template>
   <v-container>
     <h1 class="display-1" justify-start >Create Your Session</h1>
@@ -16,7 +16,7 @@
             </v-row>
             <v-row> <!--  Activity -->
                 <v-col>
-                    <v-autocomplete dense :items="activities" label="Activity" v-model="activity"></v-autocomplete>
+                    <v-autocomplete dense :items="activities" item-text="name" label="Activity" v-model="activity"></v-autocomplete>
                 </v-col>
             </v-row>
             <v-row> <!--  Start Time & Duration -->
@@ -66,9 +66,10 @@
 
 
 <script>
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import firebase from 'firebase'
 import db from '@/firebase/init'
+import {mapState} from 'vuex'
 
 export default {
     name:'CreateSession',
@@ -135,16 +136,21 @@ export default {
             
         },
     },
-    computed: {
+    watch:{
+    },
+    computed: 
+    {
         interests(){
             return this.$store.state.interests
         },
         activities(){
-            const activities = []
-            this.$store.state.activityList.forEach(res =>{
-                activities.push(res.activity)
-            })
-            return activities
+            // const activities = []
+            // this.$store.state.categories.forEach(res =>{
+            //     activities.push(res.name)
+            // })
+            // return activities
+            return this.$store.state.categories
+            
         }
     },//end computed
     created(){

@@ -23,6 +23,7 @@ export default new Vuex.Store({
     loggedInUser:null,
     users:[],
     currentSession:{},
+    categories:[]
     
   },//end state
   mutations: {
@@ -31,7 +32,11 @@ export default new Vuex.Store({
       },
       SET_USERS(state,payload){
         state.users = payload
+      },
+      SET_CATEGORIES(state, payload){
+        state.categories = payload
       }
+
   },//end mutations
   actions: {
  
@@ -74,6 +79,16 @@ export default new Vuex.Store({
             })//end forEach
         })
         commit('SET_USERS', payload)
+      },
+      getCategories({commit}){
+        let payload = []
+        db.collection('category').get().then( result => {
+          result.forEach( data => {
+            payload.push(data.data())
+          })
+        })
+        console.log(payload)
+        commit('SET_CATEGORIES', payload)
       }
   }
 })//ends Vuex.store

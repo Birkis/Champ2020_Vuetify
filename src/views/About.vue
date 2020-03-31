@@ -2,8 +2,15 @@
   <div class="about">
     <h1>This is an about page</h1>
 
-    <input type="file" @change="saveImage">
-    <img :src="url" alt="">
+    <p>{{interests}}</p>
+
+
+    <div v-for="(category, index) in categories" :key="index">
+      <p>{{category.name}}</p>
+      <img :src="category.photoURL" alt="" class="headerImg">
+
+    </div>
+
 
   </div>
 </template>
@@ -24,27 +31,15 @@ export default {
     }
   },
 
-  computed: mapState(['sessions','interests']),
+  computed: mapState(['sessions','interests','categories']),
   methods:{
 
     logThings(){
       console.log(this.file)
       },
-    saveImage(event){
-      const file = event.target.files[0]
-      const storageRef = firebase.storage().ref();
-      const task = storageRef.child(file.name).put(file).then( snapshot=>{
-          snapshot.ref.getDownloadURL().then(res =>{
-            this.url = res
-          })
-      })
-    }
   },
 
   watch:{
-    url(x){
-      console.log(x)
-    }
   },
 created(){
     
@@ -79,3 +74,12 @@ this.isBooked = this.session.booked.some(hasBooked)
 
 </script>
 
+
+<style  scoped>
+
+.headerImg{
+  width: 100%;
+  
+}
+
+</style>
