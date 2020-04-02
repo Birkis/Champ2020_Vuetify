@@ -16,7 +16,7 @@
             </v-row>
             <v-row> <!--  Activity -->
                 <v-col>
-                    <v-autocomplete dense :items="activities" item-text="name" label="Activity" v-model="activity"></v-autocomplete>
+                    <v-autocomplete dense :items="categories" item-text="name" return-object label="Activity" v-model="activity"></v-autocomplete>
                 </v-col>
             </v-row>
             <v-row> <!--  Start Time & Duration -->
@@ -94,7 +94,8 @@ export default {
             },
             hostName:null,
             hostId:null,
-            hostPicture:null
+            hostPicture:null,
+            sessionPhoto:null,
         }
     },
     methods: {
@@ -138,21 +139,8 @@ export default {
     },
     watch:{
     },
-    computed: 
-    {
-        interests(){
-            return this.$store.state.interests
-        },
-        activities(){
-            // const activities = []
-            // this.$store.state.categories.forEach(res =>{
-            //     activities.push(res.name)
-            // })
-            // return activities
-            return this.$store.state.categories
-            
-        }
-    },//end computed
+    computed: mapState(['interests', 'categories'])
+   ,//end computed
     created(){
         let ref = firebase.auth().currentUser
         this.hostId = ref.uid

@@ -2,7 +2,7 @@
     <v-container fluid v-if="session.session_id !== undefined">
         <v-row justify="center" > <!-- Headerbilde med tekst -->
             <v-col cols="12"> 
-                <v-img height="500" gradient="to bottom, rgba(100,115,201,.1), rgba(25,32,72,.79)" class="align-end" src="https://images.complex.com/complex/image/upload/c_fill,dpr_auto,q_90,w_920/fl_lossy,pg_1/NBA-Off-Season-Training_Lead_1_g2ylen.jpg">
+                <v-img height="500" gradient="to bottom, rgba(100,115,201,.1), rgba(25,32,72,.79)" class="align-end" :src="session.activity.photoURL">
                     <v-row align="center" justify="start">  <!-- Avatar + Title -->
                         <v-col cols="1"> <!-- avatar -->
                             <v-avatar class="ma-2 white--text headline" color="success" left>MB</v-avatar>
@@ -21,7 +21,7 @@
         <v-row justify="center">
             <v-col cols="8">
                 <v-chip-group class="ma-3">
-                    <v-chip mx-5 v-for="x in 3" :key="x" outlined color="orange">{{session.activity}}</v-chip>
+                    <v-chip mx-5 outlined color="orange">{{session.activity.name}}</v-chip>
                 </v-chip-group>
                 <v-row no-gutters>
                     <v-col cols="5">
@@ -83,7 +83,7 @@ export default {
     data(){
         return{
             id:this.$route.params.id,
-            session:{booked: []},
+            session:{booked: [],activity:{}},
             bookingDisabled:false,
             isBooked: false,
             isFull:false,

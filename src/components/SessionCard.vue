@@ -11,18 +11,28 @@
                     </v-list-item-content>
                     </v-list-item>
 
-                        <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194" gradient="to bottom, rgba(100,115,201,.33), rgba(25,32,72,.99)"></v-img>
+                        <v-img :src="session.activity.photoURL" height="194" gradient="to bottom, rgba(100,115,201,.33), rgba(25,32,72,.99)"></v-img>
                         <v-card-text>
                             {{session.sessionDescription}}
                         </v-card-text>
 
                         <v-card-actions>
+                            
+                            
                             <v-btn text color="deep-orange accent-4">
                                 Book Now
                             </v-btn>
                             <v-btn text color="deep-orange accent-4">
                                 Save
                             </v-btn>
+                              <v-btn v-if="currentUser && currentUser.uid === session.hostId"
+                                     text 
+                                     color="deep-orange accent-4"
+                                     @click.prevent="deleteSession(session.session_id)"
+                                     >
+                                Delete
+                            </v-btn>
+                          
                         <v-spacer></v-spacer>
                             <v-btn icon>
                                 <v-icon>mdi-heart</v-icon>
@@ -34,13 +44,15 @@
                 </v-card>
             </v-col>
         </v-row>
+        
     </v-container>
 </template>
 
 <script>
+import db from '@/firebase/init'
 export default {
     name:'SessionCard',
-    props:['sessions'],
+    props:['sessions','currentUser'],
     data(){
         return{
             hostName:null,
@@ -48,8 +60,17 @@ export default {
             hostProfilePic:null,         
         }
     },
+    methods:{
+        deleteSession(sessionId){
+            db.collection('sessions').doc(sessionId).delete()
+        }
+    },
     mounted(){
+    },
+    created(){
+       
     }
+
 }
 </script>
 

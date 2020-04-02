@@ -24,6 +24,8 @@ export default {
 
     }
   },
+  methods:{
+  },
   created(){
     this.$store.dispatch('getSessions')
     this.$store.dispatch('getUsers')

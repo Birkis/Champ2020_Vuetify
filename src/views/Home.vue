@@ -5,7 +5,7 @@
               <v-tab-item>
                 <v-row justify="center">
                   <v-col cols="12">
-                      <SessionCard :sessions="sessions"/>
+                      <SessionCard :sessions="sessions" :currentUser="loggedInUser"/>
                   </v-col>
                 </v-row>
               </v-tab-item>
@@ -20,7 +20,7 @@
 /* eslint-disable no-unused-vars */
 
 // @ is an alias to /src
-//import firebase from 'firebase'
+import firebase from 'firebase'
 import {mapState} from 'vuex'
 
 export default {
@@ -29,15 +29,23 @@ export default {
   },
   data(){
     return {
+      loggedInUser:null
    
     }
   },
-  computed:mapState(['sessions', 'users']), //ends computed
+  computed:mapState(['sessions', 'users','currentUser']), //ends computed
   methods:{
   }, // ends methods
   mounted(){
   },//Ends Mounted
   created(){
+   
+
+    //RESERVELØSNING DERSOM STATE FORTSETTER OG PRØVER Å KNULLE MEG I TOERN
+   let loggedIn = firebase.auth().currentUser
+    if (loggedIn){
+      this.loggedInUser = loggedIn
+    } 
   }
 }
 </script>

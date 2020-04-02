@@ -69,7 +69,7 @@ export default {
             firebase.auth().signOut().then(data=>{
                 console.log('You were successfully logged out. ')
             }).catch(err=> console.log(err))
-            this.$router.push({name: 'home'})
+            // this.$router.push({name: 'home'})
         }
     },
     mounted(){

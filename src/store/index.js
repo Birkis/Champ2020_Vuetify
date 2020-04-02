@@ -23,7 +23,8 @@ export default new Vuex.Store({
     loggedInUser:null,
     users:[],
     currentSession:{},
-    categories:[]
+    categories:[],
+    currentUser:{}
     
   },//end state
   mutations: {
@@ -35,7 +36,7 @@ export default new Vuex.Store({
       },
       SET_CATEGORIES(state, payload){
         state.categories = payload
-      }
+      },
 
   },//end mutations
   actions: {
@@ -87,9 +88,10 @@ export default new Vuex.Store({
             payload.push(data.data())
           })
         })
-        console.log(payload)
         commit('SET_CATEGORIES', payload)
-      }
+      }, 
+
+
   }
 })//ends Vuex.store
 
