@@ -14,6 +14,7 @@
                 <ProfileCard :users="users"/>
               </v-tab-item>
           </v-tabs>
+          <p>{{currentUser}}</p>
     </v-container>
 </template>
 <script>

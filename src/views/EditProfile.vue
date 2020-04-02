@@ -29,7 +29,7 @@
             </v-row>
             <v-row align="center"> <!-- Edit Personals -->
                <v-col name="gender"> <!-- set gender -->
-                   <v-autocomplete dense :items="genders" label="Set Gender" v-model="genderValue">
+                   <v-autocomplete dense :items="genderTypes" label="Set Gender" v-model="genderValue">
                    </v-autocomplete>
                </v-col>
                 <v-col> <!-- Date of Birth -->
@@ -84,6 +84,7 @@
 import firebase from 'firebase'
 import db from '@/firebase/init'
 import UploadProfilePic from '@/components/UploadProfilePic'
+import {mapState} from 'vuex'
 
 export default {
     name:'EditProfile',
@@ -103,15 +104,7 @@ export default {
             alert:false        
         }
     },
-    computed:{
-        interests(){
-            return this.$store.state.interests
-        },
-        genders(){
-            return this.$store.state.genderTypes
-        }
-
-    },
+    computed: mapState(['interests','genderTypes']),
     watch: {
       model (val) {
         if (val.length > 5) {
@@ -140,6 +133,7 @@ export default {
               goal: this.loggedInUser.goal,
               name: this.loggedInUser.name
           }).then(() => {
+              this.$store.dispatch('setCurrentUser', user.uid)
               this.message='Profile has been updated'
               this.alert = true
           })

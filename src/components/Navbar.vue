@@ -66,10 +66,12 @@ export default {
     methods:{
         byeBye(){
             // eslint-disable-next-line no-unused-vars
-            firebase.auth().signOut().then(data=>{
-                console.log('You were successfully logged out. ')
-            }).catch(err=> console.log(err))
+            firebase.auth().signOut().then(() =>{
+                console.log('You were successfully logged out.')
+                })
+                .catch(err=> console.log(err))
             // this.$router.push({name: 'home'})
+            this.$store.dispatch('resetCurrentUser')
         }
     },
     mounted(){
@@ -78,6 +80,9 @@ export default {
                 this.loggedIn=true;
                 this.loggedInEmail = user.email
 
+                //PRØVER Å SETTE VIA EN DISPATCH 
+                let user_id = user.uid
+                this.$store.dispatch('setCurrentUser', user_id)
             }else{
                 this.loggedIn=false;
                 this.loggedInEmail= '';

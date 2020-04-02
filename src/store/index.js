@@ -12,14 +12,6 @@ export default new Vuex.Store({
     sessions:[],
     interests:['basketball', 'yoga', 'running', 'windsurfing', 'bodybuilding','golf','Lacrosse','Strength','Pumping Iron', 'Rugby'],
     genderTypes: ['male','female','not your business'],
-    activityList: [
-                   {activity:'Basketball', activityImg:'https://bit.ly/38201dI'},
-                   {activity:'Yoga', activityImg:'https://bit.ly/38201dI'},
-                   {activity:'Golf', activityImg:'https://bit.ly/38201dI'},
-                   {activity:'Running', activityImg:'https://bit.ly/38201dI'},
-                   {activity:'koding', activityImg:'https://bit.ly/38201dI'},
-                   {activity:'klatring', activityImg:'https://bit.ly/38201dI'}
-                  ],
     loggedInUser:null,
     users:[],
     currentSession:{},
@@ -37,11 +29,14 @@ export default new Vuex.Store({
       SET_CATEGORIES(state, payload){
         state.categories = payload
       },
-
+      SET_CURRENTUSER(state,payload){
+        state.currentUser = payload 
+      },
+      RESET_CURRENTUSER(state,payload){
+        state.currentUser = payload
+      }
   },//end mutations
   actions: {
- 
-      //henter sessions med onSnapshot - filtrerer ut sessions som allerede eksisterer i State
       getSessions({commit}){
         let payload = []      
         let ref = db.collection('sessions')
@@ -51,17 +46,14 @@ export default new Vuex.Store({
             const foundItem = this.state.sessions.find( ({session_id}) => {
               return session_id === ID            
               })//end find
-            if(foundItem===undefined){
-              payload.push(res.data())
-            }else{
-              console.log('Session with title '+ foundItem.sessionTitle + ' already in the State')
-            }
-            //payload.push(res.data())
-          })
+              if(foundItem===undefined){
+                payload.push(res.data())
+                }
+              })
+          commit('SET_SESSIONS', payload)
         })
-        commit('SET_SESSIONS', payload)
+        
       },
-      //henter ut users med onSnapshot - Filtrerer vekk brukere som allerede eksisterer i State
       getUsers({commit}){
         let payload = []
         let ref = db.collection('users')
@@ -73,26 +65,33 @@ export default new Vuex.Store({
               })//end find
             if(foundItem===undefined){
               payload.push(res.data())
-            }else{
-              console.log('User with ID '+ foundItem.user_id + ' already in the database')
-            }
-            //payload.push(res.data())
-            })//end forEach
-        })
+                }
+              })//end forEach
         commit('SET_USERS', payload)
+        }) 
       },
       getCategories({commit}){
         let payload = []
         db.collection('category').get().then( result => {
           result.forEach( data => {
             payload.push(data.data())
+            commit('SET_CATEGORIES', payload)
           })
         })
-        commit('SET_CATEGORIES', payload)
-      }, 
-
-
-  }
+        
+      },
+      setCurrentUser({commit},user_id){
+        let payload = null
+        db.collection('users').doc(user_id).get().then( res => {
+           payload = res.data()
+           commit('SET_CURRENTUSER', payload)
+          })   
+      },
+      resetCurrentUser({commit}){
+        let payload = null
+        commit('RESET_CURRENTUSER',payload)
+      }
+  }//end Actions 
 })//ends Vuex.store
 
 //La til GIT HUB

@@ -7,7 +7,7 @@
                     <v-list-item-avatar color="green"> <img :src="session.hostPicture" alt="Host Avatar Photo"> </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline"> <router-link :to="{ name:'SessionView', params:{id:session.session_id}}">{{session.sessionTitle}}</router-link> </v-list-item-title>
-                        <v-list-item-subtitle><router-link :to="{ name:'ProfileView', params:{id:session.hostId}}">{{session.hostName}}</router-link></v-list-item-subtitle>
+                        <v-list-item-subtitle><router-link :to="{ name:'ProfileView', params:{id:session.host_id}}">{{session.hostName}}</router-link></v-list-item-subtitle>
                     </v-list-item-content>
                     </v-list-item>
 
@@ -15,17 +15,14 @@
                         <v-card-text>
                             {{session.sessionDescription}}
                         </v-card-text>
-
-                        <v-card-actions>
-                            
-                            
+                        <v-card-actions>                           
                             <v-btn text color="deep-orange accent-4">
                                 Book Now
                             </v-btn>
                             <v-btn text color="deep-orange accent-4">
                                 Save
                             </v-btn>
-                              <v-btn v-if="currentUser && currentUser.uid === session.hostId"
+                              <v-btn v-if="currentUser && currentUser.uid === session.host_id"
                                      text 
                                      color="deep-orange accent-4"
                                      @click.prevent="deleteSession(session.session_id)"
@@ -47,7 +44,6 @@
         
     </v-container>
 </template>
-
 <script>
 import db from '@/firebase/init'
 export default {
@@ -56,7 +52,7 @@ export default {
     data(){
         return{
             hostName:null,
-            hostId:null,
+            host_id:null,
             hostProfilePic:null,         
         }
     },

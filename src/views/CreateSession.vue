@@ -21,7 +21,7 @@
             </v-row>
             <v-row> <!--  Start Time & Duration -->
                 <v-col>
-                    <v-text-field type="date" label="Start date" placeholder="21/10" v-model="sessionTime.startDate"></v-text-field>
+                    <v-text-field type="date" min="2020-04-01" max="2021-01-01" label="Start date" placeholder="21/10" v-model="sessionTime.startDate"></v-text-field>
                 </v-col>
                 <v-col>
                     <v-text-field type="time" label="Start time" placeholder="17:30" v-model="sessionTime.startTime"></v-text-field>
@@ -93,7 +93,7 @@ export default {
                 placeName:null
             },
             hostName:null,
-            hostId:null,
+            host_id:null,
             hostPicture:null,
             sessionPhoto:null,
         }
@@ -125,9 +125,9 @@ export default {
                     lng:this.geoLocation.lng,
                     placeName:this.geoLocation.placeName
                 },
-                hostId:this.hostId,
-                hostName:this.hostName,
-                hostPicture:this.hostPicture,
+                host_id:this.currentUser.user_id,
+                hostName:this.currentUser.name,
+                hostPicture:this.currentUser.profilePic,
                 timeStamp:Date.now(),
                 session_id:ID
             }).catch(error => {
@@ -139,51 +139,16 @@ export default {
     },
     watch:{
     },
-    computed: mapState(['interests', 'categories'])
+    computed: mapState(['interests', 'categories','currentUser'])
    ,//end computed
     created(){
-        let ref = firebase.auth().currentUser
-        this.hostId = ref.uid
-        this.hostName = ref.displayName
-        this.hostPicture = ref.photoURL
+        // let ref = firebase.auth().currentUser
+        // this.host_id = ref.uid
+        // this.hostName = ref.displayName
+        // this.hostPicture = ref.photoURL
 
     }//end created    
 }
-
-
-
-
-//KOPI AV SAVEDATA() I TILFELLE 
-
-// saveData(){
-//     db.collection('sessions').doc().set({
-//         sessionTitle:this.sessionTitle,
-//         sessionDescription:this.sessionDescription,
-//         activity:this.activity,
-//         sessionTime:{
-//             startDate:this.sessionTime.startDate,
-//             startTime:this.sessionTime.startTime,
-//             duration:this.sessionTime.duration
-//         },
-//         attendees:this.attendees,
-//         booked:[],  
-//         price:this.price,
-//         interestValues:this.interestValues,
-//         geoLocation:{
-//             lat:this.geoLocation.lat,
-//             lng:this.geoLocation.lng,
-//             placeName:this.geoLocation.placeName
-//         },
-//         hostId:this.hostId,
-//         hostName:this.hostName,
-//         hostPicture:this.hostPicture,
-//         timeStamp:Date.now()
-//     }).catch(error => {
-//         console.log(error)
-//     })
-//     this.$router.push('/')
-
-
 
 
 </script>
