@@ -2,59 +2,121 @@
 <template>
   <v-container>
     <h1 class="display-1" justify-start >Create Your Session</h1>
-    <v-form mx-5> <!-- create the session -->
+    <v-form mx-5 v-model="valid"> <!-- create the session -->
          <v-container>
             <v-row> <!--  Title -->
                 <v-col> 
-                    <v-text-field label="Session Title" type="text" v-model="sessionTitle"></v-text-field>
+                    <v-text-field 
+                    :rules=[rules.required]
+                    label="Session Title" 
+                    type="text" 
+                    v-model="sessionTitle">
+                    </v-text-field>
                 </v-col>
             </v-row>
             <v-row> <!--  Description -->
                 <v-col>
-                    <v-textarea label="Description" type="text" v-model="sessionDescription" rows="2" auto-grow></v-textarea>
+                    <v-textarea 
+                    :rules=[rules.required]
+                    label="Description" 
+                    type="text" 
+                    v-model="sessionDescription" 
+                    rows="2" 
+                    auto-grow>
+                    </v-textarea>
                 </v-col>
             </v-row>
             <v-row> <!--  Activity -->
                 <v-col>
-                    <v-autocomplete dense :items="categories" item-text="name" return-object label="Activity" v-model="activity"></v-autocomplete>
+                    <v-autocomplete 
+                    dense
+                    :rules=[rules.required] 
+                    :items="categories" 
+                    item-text="name" 
+                    return-object 
+                    label="Activity" 
+                    v-model="activity">
+                    </v-autocomplete>
                 </v-col>
             </v-row>
             <v-row> <!--  Start Time & Duration -->
                 <v-col>
-                    <v-text-field type="date" min="2020-04-01" max="2021-01-01" label="Start date" placeholder="21/10" v-model="sessionTime.startDate"></v-text-field>
+                    <v-text-field 
+                    type="date" 
+                    :min="currentDate" 
+                    max="2021-01-01" 
+                    label="Start date" 
+                    :rules=[rules.required,dateCheck] 
+                    v-model="sessionTime.startDate">
+                    </v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field type="time" label="Start time" placeholder="17:30" v-model="sessionTime.startTime"></v-text-field>
+                    <v-text-field 
+                    :rules=[rules.required]
+                    type="time" 
+                    label="Start time" 
+                    v-model="sessionTime.startTime">
+                    </v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Duration" type="number" v-model="sessionTime.duration" suffix="Hours"></v-text-field>
+                    <v-text-field 
+                    label="Duration" 
+                    type="number" 
+                    v-model="sessionTime.duration" 
+                    suffix="Hours">
+                    </v-text-field>
                 </v-col>
         
             </v-row>
             <v-row> <!-- People & Price -->
                 <v-col>
-                    <v-text-field label="How many people" type="number" v-model="attendees"></v-text-field>
+                    <v-text-field 
+                    :rules=[rules.required]
+                    label="How many people" 
+                    type="number" 
+                    v-model="attendees">
+                    </v-text-field>
                 </v-col>
                 <v-col>
-                    <v-text-field label="Price" type="number" v-model="price" suffix="NOK"></v-text-field>
+                    <v-text-field 
+                    :rules=[rules.required,rules.maxPrice]
+                    label="Price" 
+                    type="number" 
+                    v-model="price" 
+                    suffix="NOK">
+                    </v-text-field>
                 </v-col>
             </v-row>
             <v-row> <!-- Location -->
                 <v-col>
-                    <gmap-autocomplete class="gPlaces" @place_changed="setPlace"></gmap-autocomplete>
+                    <gmap-autocomplete 
+                    class="gPlaces" 
+                    @place_changed="setPlace">
+                    </gmap-autocomplete>
                 </v-col>
             </v-row>
             <v-row> <!-- Tags -->
                 <v-col>
-                    <v-autocomplete  chips :items="interests" label="Add tags" v-model="interestValues" multiple outlined>
-                        </v-autocomplete>
+                    <v-autocomplete  
+                    chips 
+                    :items="interests" 
+                    label="Add tags" 
+                    v-model="interestValues" 
+                    multiple 
+                    outlined>
+                    </v-autocomplete>
                 </v-col>
             </v-row>
         </v-container>
     <v-container> <!-- Create Session Button-->
         <v-row>
             <v-col>
-                <v-btn color="deep-orange" class="white--text" @click.prevent="saveData" depressed>
+                <v-btn 
+                :disabled="!valid"
+                color="deep-orange" 
+                class="white--text" 
+                @click.prevent="saveData" 
+                depressed>
                     Create Session
                 </v-btn>
             </v-col>
@@ -70,18 +132,21 @@
 import firebase from 'firebase'
 import db from '@/firebase/init'
 import {mapState} from 'vuex'
+import moment from 'moment'
+
 
 export default {
     name:'CreateSession',
     data(){
         return{
+            valid:false,
             sessionTitle:null,
             sessionDescription:null,
             activity: null,
             sessionTime:{
                 startDate:null,
                 startTime:null,
-                duration:null
+                duration:null,
             },
             attendees:null,
             price:null,
@@ -96,8 +161,13 @@ export default {
             host_id:null,
             hostPicture:null,
             sessionPhoto:null,
-        }
-    },
+            currentDate:moment().format('YYYY-MM-DD'),
+            rules:{
+                required: value => !!value || 'Required.',
+                maxPrice: value => value< 10000 || 'Max Price 10000',
+                maxPeople: value => value<=100 || 'No more than 100 people'
+            }
+    }},//end data
     methods: {
         setPlace(place) {
             this.selectedPlace = place;
@@ -105,7 +175,16 @@ export default {
             this.geoLocation.lng = place.geometry.location.lng()
             this.geoLocation.placeName = place.name
         },
-        saveData(){
+        dateCheck(){
+            if(Date.parse(this.sessionTime.startDate)<Date.now()){
+                console.log('failed validation')
+                return false
+            }else{
+                console.log('Passed')
+                return true
+            }
+        },
+        saveData(){     
             let ID = Math.random().toString(16).substr(2,12)
             db.collection('sessions').doc(ID).set({
                 sessionTitle:this.sessionTitle,
@@ -134,19 +213,14 @@ export default {
                 console.log(error)
             })
             this.$router.push('/')
-            
-        },
+                
+        }
     },
-    watch:{
+    watch:{ 
     },
     computed: mapState(['interests', 'categories','currentUser'])
    ,//end computed
     created(){
-        // let ref = firebase.auth().currentUser
-        // this.host_id = ref.uid
-        // this.hostName = ref.displayName
-        // this.hostPicture = ref.photoURL
-
     }//end created    
 }
 
