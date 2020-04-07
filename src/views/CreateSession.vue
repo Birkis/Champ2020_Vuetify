@@ -73,14 +73,16 @@
                     <v-text-field 
                     :rules=[rules.required]
                     label="How many people" 
-                    type="number" 
+                    type="number"
+                    min="1" 
                     v-model="attendees">
                     </v-text-field>
                 </v-col>
                 <v-col>
                     <v-text-field 
                     :rules=[rules.required,rules.maxPrice]
-                    label="Price" 
+                    label="Price"
+                    min="0" 
                     type="number" 
                     v-model="price" 
                     suffix="NOK">
@@ -165,7 +167,7 @@ export default {
             rules:{
                 required: value => !!value || 'Required.',
                 maxPrice: value => value< 10000 || 'Max Price 10000',
-                maxPeople: value => value<=100 || 'No more than 100 people'
+                maxPeople: value => value<=100 || 'No more than 100 people',
             }
     }},//end data
     methods: {

@@ -39,36 +39,30 @@ export default new Vuex.Store({
   actions: {
       getSessions({commit}){
         let payload = []      
-        let ref = db.collection('sessions')
+        let ref = db.collection('sessions').orderBy('timeStamp')
         ref.onSnapshot( snap =>{
-          snap.forEach( res =>{
-            const ID = res.data().session_id
-            const foundItem = this.state.sessions.find( ({session_id}) => {
-              return session_id === ID            
-              })//end find
-              if(foundItem===undefined){
-                payload.push(res.data())
-                }
-              })
+          snap.docChanges().forEach( change => {
+              if(change.type === 'added'){
+                payload.push(change.doc.data())
+              }
+            })
           commit('SET_SESSIONS', payload)
         })
-        
       },
       getUsers({commit}){
         let payload = []
-        let ref = db.collection('users')
+        let ref = db.collection('users').orderBy('dob')        
         ref.onSnapshot( snap => {
-          snap.forEach( res => {
-            const ID = res.data().user_id
-            const foundItem = this.state.users.find( ({user_id}) => {
-              return user_id === ID            
-              })//end find
-            if(foundItem===undefined){
-              payload.push(res.data())
-                }
-              })//end forEach
-        commit('SET_USERS', payload)
-        }) 
+          snap.docChanges().forEach(change => {
+            console.log(change.doc.data())
+            if(change.type === 'added'){
+              payload.push(change.doc.data())
+            }
+          })
+          commit('SET_USERS',payload)
+        })
+        
+
       },
       getCategories({commit}){
         let payload = []
