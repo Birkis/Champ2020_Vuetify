@@ -30,7 +30,7 @@
                     </v-tab-item>
                  <v-tab>Sessions</v-tab>
                  <v-tab-item>
-                    <SessionCard :sessions="sessions"/>
+                    <SessionCard :sessions="mySessions"/>
                  </v-tab-item>
                  <v-tab disabled>Testimonials</v-tab>
                  <v-tab-item>
@@ -59,6 +59,12 @@ export default {
         sessions(){
         return this.$store.state.sessions
         },
+        mySessions(){
+            let mySessions = this.$store.state.sessions.filter( session => {
+                return session.host_id == this.user.user_id
+                }) 
+            return mySessions
+        }
     },//end computed
     components:{
 

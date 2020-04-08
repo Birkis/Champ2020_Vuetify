@@ -5,7 +5,7 @@
               <v-tab-item>
                 <v-row justify="center">
                   <v-col cols="12">
-                      <SessionCard :sessions="sessions" :currentUser="loggedInUser"/>
+                      <SessionCard :sessions="notExpiredSession" :currentUser="loggedInUser"/>
                   </v-col>
                 </v-row>
               </v-tab-item>
@@ -33,7 +33,13 @@ export default {
    
     }
   },
-  computed:mapState(['sessions', 'users','currentUser']), //ends computed
+  computed:{
+    notExpiredSession(){
+      console.log(this.$store.getters.notExpired)
+      return this.$store.getters.notExpired
+    },
+    ...mapState(['sessions', 'users','currentUser'])}, //ends computed
+  
   methods:{
   }, // ends methods
   mounted(){

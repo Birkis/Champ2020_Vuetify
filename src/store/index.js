@@ -34,7 +34,8 @@ export default new Vuex.Store({
       },
       RESET_CURRENTUSER(state,payload){
         state.currentUser = payload
-      }
+      },
+
   },//end mutations
   actions: {
       getSessions({commit}){
@@ -85,7 +86,16 @@ export default new Vuex.Store({
         let payload = null
         commit('RESET_CURRENTUSER',payload)
       }
-  }//end Actions 
+  },//end Actions 
+  getters:{
+    notExpired: state => {
+      let unexpired = state.sessions.filter( session => { 
+        let timestamp = Date.parse(session.sessionTime.startDate)
+        return session.timeStamp < timestamp
+        })
+      return unexpired
+    },
+  }
 })//ends Vuex.store
 
 //La til GIT HUB
