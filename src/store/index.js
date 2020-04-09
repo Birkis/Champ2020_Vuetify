@@ -43,7 +43,7 @@ export default new Vuex.Store({
         let ref = db.collection('sessions').orderBy('timeStamp')
         ref.onSnapshot( snap =>{
           snap.docChanges().forEach( change => {
-              if(change.type === 'added'){
+              if(change.type === 'added' || change.type === 'modified'){
                 payload.push(change.doc.data())
               }
             })
@@ -55,7 +55,6 @@ export default new Vuex.Store({
         let ref = db.collection('users').orderBy('dob')        
         ref.onSnapshot( snap => {
           snap.docChanges().forEach(change => {
-            console.log(change.doc.data())
             if(change.type === 'added'){
               payload.push(change.doc.data())
             }

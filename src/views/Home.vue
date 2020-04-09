@@ -35,11 +35,10 @@ export default {
   },
   computed:{
     notExpiredSession(){
-      console.log(this.$store.getters.notExpired)
       return this.$store.getters.notExpired
     },
-    ...mapState(['sessions', 'users','currentUser'])}, //ends computed
-  
+    ...mapState(['sessions', 'users','currentUser'])
+  }, //ends computed
   methods:{
   }, // ends methods
   mounted(){

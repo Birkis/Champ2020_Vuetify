@@ -6,7 +6,13 @@
                     <v-list-item>
                     <v-list-item-avatar color="green"> <img :src="session.hostPicture" alt="Host Avatar Photo"> </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title class="headline"> <router-link :to="{ name:'SessionView', params:{id:session.session_id}}">{{session.sessionTitle}}</router-link> </v-list-item-title>
+                        <v-list-item-title class="headline"> 
+                            <router-link 
+                                :to="{  name:'SessionView',
+                                        params: { id:session.session_id } }">
+                                        {{session.sessionTitle}}
+                            </router-link> 
+                        </v-list-item-title>
                         <v-list-item-subtitle><router-link :to="{ name:'ProfileView', params:{id:session.host_id}}">{{session.hostName}}</router-link></v-list-item-subtitle>
                     </v-list-item-content>
                     </v-list-item>

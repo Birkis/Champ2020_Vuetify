@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
@@ -39,7 +40,7 @@ const routes = [
     path:'/SessionView/:id',
     name: 'SessionView',
     component: SessionView,
-    props:true
+    props:true,
   },
   {
     path:'/sessionslist',
