@@ -35,6 +35,9 @@ export default new Vuex.Store({
       RESET_CURRENTUSER(state,payload){
         state.currentUser = payload
       },
+      // UPDATE_BOOKEDSESSION(state,x,y,z){
+
+      // },
 
   },//end mutations
   actions: {
@@ -84,7 +87,13 @@ export default new Vuex.Store({
       resetCurrentUser({commit}){
         let payload = null
         commit('RESET_CURRENTUSER',payload)
-      }
+      },
+      // updateBookingInfo({commit},session_id,user_id,time ){
+      //   let z = session_id
+      //   let y = user_id
+      //   let x = time
+      //   commit('UPDATE_BOOKEDSESSION',x,y,z)
+      // }
   },//end Actions 
   getters:{
     notExpired: state => {
