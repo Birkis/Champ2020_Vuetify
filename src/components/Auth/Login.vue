@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
-    <v-row justify="center"> <!-- login with email -->
+    <v-form> <!-- OBS! MÅ TROLIG SETTE OPP FORM  -->
+        <v-row justify="center"> <!-- login with email -->
         <v-col cols="8">    
                 <v-card class="pa-3"> 
                     <v-card-title primary-title>
@@ -26,6 +27,8 @@
                 </v-card>
         </v-col>
     </v-row>
+    </v-form>
+    
     <v-spacer></v-spacer>
     <v-row justify="center"> <!-- or -->
         <v-col cols="2">

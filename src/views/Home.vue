@@ -37,7 +37,7 @@ export default {
     notExpiredSession(){
       return this.$store.getters.notExpired
     },
-    ...mapState(['sessions', 'users','currentUser'])
+    ...mapState(['users','currentUser'])
   }, //ends computed
   methods:{
   }, // ends methods

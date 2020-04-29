@@ -21,7 +21,7 @@ export default new Vuex.Store({
   },//end state
   mutations: {
       SET_SESSIONS(state, payload){
-        state.sessions = payload
+         state.sessions = payload
       },
       SET_USERS(state,payload){
         state.users = payload
@@ -42,15 +42,19 @@ export default new Vuex.Store({
   },//end mutations
   actions: {
       getSessions({commit}){
-        let payload = []      
+        let payload = []   
         let ref = db.collection('sessions').orderBy('timeStamp')
         ref.onSnapshot( snap =>{
           snap.docChanges().forEach( change => {
-              if(change.type === 'added' || change.type === 'modified'){
+            if(change.type === 'added'){
                 payload.push(change.doc.data())
               }
+            else if(change.type === 'modified'){
+              payload[change.newIndex] = change.doc.data()
+            }
             })
-          commit('SET_SESSIONS', payload)
+            commit('SET_SESSIONS', payload)
+          
         })
       },
       getUsers({commit}){
@@ -99,7 +103,7 @@ export default new Vuex.Store({
     notExpired: state => {
       let unexpired = state.sessions.filter( session => { 
         let timestamp = Date.parse(session.sessionTime.startDate)
-        return session.timeStamp < timestamp
+        return Date.now() < timestamp
         })
       return unexpired
     },

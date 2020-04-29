@@ -97,13 +97,12 @@
 import * as firebase from 'firebase';
 import db from '@/firebase/init'
 import {mapState} from 'vuex'
-
 export default {
     name: 'SessionView',
     data(){
         return{
             id:this.$route.params.id,
-            booked:false       
+            booked:false,
         }
     },
     methods:{
@@ -149,11 +148,12 @@ export default {
                 alreadyBooked = true
             }
             return alreadyBooked
-        }
-
+        },
     },   
     created(){ 
     },//end created
+    mounted(){
+    }
 }
 </script>
 
