@@ -50,9 +50,12 @@ export default new Vuex.Store({
                 payload.push(change.doc.data())
               }
             else if(change.type === 'modified'){
-              payload[change.newIndex] = change.doc.data()
+                payload[change.newIndex] = change.doc.data()
+              }
+            else if(change.type === 'removed'){
+              payload.splice(change.oldIndex,1)
             }
-            })
+              })
             commit('SET_SESSIONS', payload)
           
         })

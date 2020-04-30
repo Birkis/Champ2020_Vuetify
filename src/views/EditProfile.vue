@@ -52,6 +52,19 @@
                         </v-menu>
                 </v-col>
             </v-row>
+            <v-row> <!-- Bio -->
+                <v-col>
+                    <v-textarea
+                        name="bio"
+                        label="Bio"
+                        id="bio"
+                        auto-grow
+                        filled
+                        rows="1"
+                        placeholder="In my younger and more vulnerable years my father gave me some advice that I’ve been turning over in my mind ever since."
+                    ></v-textarea>
+                </v-col>
+            </v-row>
             <v-row> <!-- select interests -->
                 <v-col>
                     <v-autocomplete dense chips :items="interests" label="Set interests" v-model="interestValues" multiple outlined>
@@ -62,15 +75,36 @@
                 <v-col cols="12" sm="6" m4="4"><v-text-field type="text" v-model="loggedInUser.motto" placeholder="Never surrender, never say die" label="My motto"></v-text-field></v-col>
                 <v-col cols="12" sm="6" m4="4"><v-text-field type="text" v-model="loggedInUser.goal" placeholder="Be happy, or die trying" label="My goal"></v-text-field></v-col>
             </v-row>
-            <v-row> <!-- For Trainers -->
+            <v-row> <!-- Toggle For Trainers -->
                 <v-col>
-                    <v-switch label="I'm a personal trainer"> </v-switch>
+                    <v-switch 
+                        v-model="isTrainer" 
+                        inset 
+                        label="I'm a personal trainer"> 
+                    </v-switch>
                 </v-col>
+            </v-row>
+            <v-row> <!-- Tabs for Education, Experience and Reviews -->
+                <v-tabs v-if="isTrainer" background-color="teal accent-4" class="elevation-2" grow dark>
+                    <v-tab>Education</v-tab>
+                        <v-tab-item>
+                            <AddEducation/>
+                        </v-tab-item>
+                    <v-tab>Experience</v-tab>
+                        <v-tab-item>
+                            <p>Some item</p>
+                        </v-tab-item>
+                    <v-tab>Reviews</v-tab>
+                        <v-tab-item>
+                            <p>Some item</p>
+                        </v-tab-item>
+                </v-tabs>
             </v-row>
             <v-row justify="center">  <!-- Submit button -->
                 <v-col cols="3"> 
                     <v-btn color="deep-orange" class="white--text" depressed @click.prevent="updateUser">Update Info</v-btn>
                 </v-col>
+            
             </v-row>
          </v-form>
         
@@ -84,12 +118,14 @@
 import firebase from 'firebase'
 import db from '@/firebase/init'
 import UploadProfilePic from '@/components/UploadProfilePic'
+import AddEducation from '@/components/AddEducation'
 import {mapState} from 'vuex'
 
 export default {
     name:'EditProfile',
     components:{
-        UploadProfilePic
+        UploadProfilePic,
+        AddEducation
     },
     data(){
         return{
@@ -101,7 +137,9 @@ export default {
             loggedInUser:{},
             url:'',
             message:'',
-            alert:false        
+            alert:false,
+            isTrainer:false,
+
         }
     },
     computed: mapState(['interests','genderTypes']),

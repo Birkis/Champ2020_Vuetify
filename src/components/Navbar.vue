@@ -51,9 +51,7 @@ export default {
         return{
             drawer:false,
             links:[
-                {icon:'mdi-view-dashboard-outline', name:'Home', route:'/'},
-                {icon:'mdi-format-list-text', name:'Sessions', route:'/sessionslist'},
-                {icon:'mdi-account-search-outline', name:'View Profiles', route:'/viewprofiles'},          
+                {icon:'mdi-view-dashboard-outline', name:'Home', route:'/'},          
             ],
             guardedLinks:[
                 {icon:'mdi-account-edit-outline', name:'Edit Profile', route:'/editprofile'},
