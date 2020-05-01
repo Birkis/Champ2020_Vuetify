@@ -59,6 +59,7 @@ export default {
             ],
             loggedIn:false,
             loggedInEmail:'',
+            
         }
     },//end data
     methods:{

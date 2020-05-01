@@ -88,7 +88,26 @@
                 <v-tabs v-if="isTrainer" background-color="teal accent-4" class="elevation-2" grow dark>
                     <v-tab>Education</v-tab>
                         <v-tab-item>
-                            <AddEducation/>
+                            <v-expansion-panels v-if="education">
+                                <v-expansion-panel expand focusable v-for="(item, index) in education" :key="index">
+                                    <v-row align="center" no-gutters >
+                                        <v-col cols="1" class="mx-auto" >
+                                            <v-icon class="ml-3 red--text" @click.prevent="delEduItem(index)" >mdi-close-circle-outline</v-icon>
+                                        </v-col>
+                                        <v-col cols="10">
+                                            <v-expansion-panel-header class="display-1 pl-0">
+                                                {{item.school}}  
+                                            </v-expansion-panel-header>
+                                        </v-col>
+                                    </v-row>    
+                                    <v-expansion-panel-content class="ml-6">
+                    
+                                        <h2 class="subtitle-1 font-weight-bold"><span class="font-weight-light">Degree in:</span> {{item.degree}}</h2>
+                                        <h2 class="subtitle-1 font-weight-bold"><span class="font-weight-light">Graduated: </span>{{item.completed}}</h2>                                 
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
+                            </v-expansion-panels>
+                            <AddEducation v-on:addEducation="addEducation($event)"/>
                         </v-tab-item>
                     <v-tab>Experience</v-tab>
                         <v-tab-item>
@@ -107,7 +126,6 @@
             
             </v-row>
          </v-form>
-        
     </v-container>  
 </template>
 
@@ -139,6 +157,7 @@ export default {
             message:'',
             alert:false,
             isTrainer:false,
+            education:[]
 
         }
     },
@@ -169,7 +188,8 @@ export default {
               postcode: this.loggedInUser.postcode,
               motto: this.loggedInUser.motto,
               goal: this.loggedInUser.goal,
-              name: this.loggedInUser.name
+              name: this.loggedInUser.name,
+              isTrainer: this.isTrainer
           }).then(() => {
               this.$store.dispatch('setCurrentUser', user.uid)
               this.message='Profile has been updated'
@@ -181,6 +201,13 @@ export default {
           db.collection('users').doc(user.uid).update({
               profilePic: newUrl
           })
+      },
+      addEducation(eduItem){
+        this.education.push(eduItem)
+      },
+      delEduItem(index){
+
+          this.education.splice(index,1)
       }
     },
     created(){
@@ -193,6 +220,7 @@ export default {
              this.loggedInUser.postcode = res.data().postcode
              this.loggedInUser.motto = res.data().motto
              this.loggedInUser.goal = res.data().goal
+             this.isTrainer = res.data().isTrainer
              
         })        
     }
