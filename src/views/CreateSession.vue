@@ -1,7 +1,17 @@
 
 <template>
   <v-container>
-    <h1 class="display-1" justify-start >Create Your Session</h1>
+    <h1 class="display-1">Create Your Session</h1>
+    <v-autocomplete
+        dense
+        :items="currentUser.savedSessions"
+        item-text="sessionTitle"
+        return-object
+        label="Use a Saved Session"
+        v-model="savedSessions"
+        class="my-7"
+        >
+    </v-autocomplete>
     <v-form mx-5 v-model="valid"> <!-- create the session -->
          <v-container>
             <v-row> <!--  Title -->
@@ -39,6 +49,27 @@
                     </v-autocomplete>
                 </v-col>
             </v-row>
+            <v-row> <!-- People & Price -->
+                <v-col>
+                    <v-text-field 
+                    :rules=[rules.required]
+                    label="How many people" 
+                    type="number"
+                    min="1" 
+                    v-model="attendees">
+                    </v-text-field>
+                </v-col>
+                <v-col>
+                    <v-text-field 
+                    :rules=[rules.required,rules.maxPrice]
+                    label="Price"
+                    min="0" 
+                    type="number" 
+                    v-model="price" 
+                    suffix="NOK">
+                    </v-text-field>
+                </v-col>
+            </v-row>
             <v-row> <!--  Start Time & Duration -->
                 <v-col>
                     <v-text-field 
@@ -68,27 +99,6 @@
                 </v-col>
         
             </v-row>
-            <v-row> <!-- People & Price -->
-                <v-col>
-                    <v-text-field 
-                    :rules=[rules.required]
-                    label="How many people" 
-                    type="number"
-                    min="1" 
-                    v-model="attendees">
-                    </v-text-field>
-                </v-col>
-                <v-col>
-                    <v-text-field 
-                    :rules=[rules.required,rules.maxPrice]
-                    label="Price"
-                    min="0" 
-                    type="number" 
-                    v-model="price" 
-                    suffix="NOK">
-                    </v-text-field>
-                </v-col>
-            </v-row>
             <v-row> <!-- Location -->
                 <v-col>
                     <gmap-autocomplete 
@@ -111,18 +121,32 @@
             </v-row>
         </v-container>
     <v-container> <!-- Create Session Button-->
-        <v-row>
-            <v-col>
+        <v-row justify="center" >
+            <v-col cols="4"  >
                 <v-btn 
-                :disabled="!valid"
-                color="deep-orange" 
-                class="white--text" 
-                @click.prevent="saveData" 
-                depressed>
-                    Create Session
+                    :disabled="!valid"
+                    color="deep-orange" 
+                    class="white--text"
+                    @click.prevent="saveData" 
+                    depressed>
+                        Publish Session
+                </v-btn>
+            </v-col>
+            <v-col cols="4">
+                <v-btn 
+                    color="teal" 
+                    class="white--text" 
+                    @click.prevent="savedSession" 
+                    depressed>
+                        Save Session
                 </v-btn>
             </v-col>
         </v-row>
+        <v-divider></v-divider>
+        <p class="overline font-italic blue-grey--text mt-3 mx-7">
+            **<span class="font-italic font-weight-bold">Save</span> a session to quickly create the same session again another time. 
+            You can still <span class="font-italic font-weight-bold">publish</span> this session after saving it.
+        </p>
     </v-container>
     </v-form>
   </v-container>
@@ -168,7 +192,8 @@ export default {
                 required: value => !!value || 'Required.',
                 maxPrice: value => value< 10000 || 'Max Price 10000',
                 maxPeople: value => value<=100 || 'No more than 100 people',
-            }
+            },
+            savedSessions:{}
     }},//end data
     methods: {
         setPlace(place) {
@@ -216,9 +241,44 @@ export default {
             })
             this.$router.push('/')
                 
-        }
+        },
+        savedSession(){
+            db.collection('users').doc(this.currentUser.user_id).update({
+                savedSessions: firebase.firestore.FieldValue.arrayUnion({
+                    sessionTitle:this.sessionTitle,
+                    sessionDescription:this.sessionDescription,
+                    activity:this.activity,
+                    price:this.price,
+                    attendees:this.attendees,
+                    geoLocation:{
+                        lat:this.geoLocation.lat,
+                        lng:this.geoLocation.lng,
+                        placeName:this.geoLocation.placeName
+                    },
+                })           
+            }).catch(error => {
+                console.log(error)
+            }).then( ()=>{
+                let payload = {
+                        sessionTitle:this.sessionTitle,
+                        sessionDescription:this.sessionDescription,
+                        activity:this.activity,
+                        price:this.price,
+                        attendees:this.attendees,
+                    }
+                this.$store.dispatch('setSavedSession', payload)
+                }         
+            ) 
+        },
     },
-    watch:{ 
+    watch:{
+        savedSessions(x){
+            this.sessionTitle = x.sessionTitle
+            this.sessionDescription = x.sessionDescription
+            this.attendees = x.attendees
+            this.price = x.price
+            this.activity = x.activity
+        }
     },
     computed: mapState(['interests', 'categories','currentUser'])
    ,//end computed

@@ -6,9 +6,9 @@
                                     <v-toolbar-title class="display-1" ><span class="font-weight-light">CHAMP</span><span class="font-weight-bold" >2020</span></v-toolbar-title>
                 </router-link>
                 <v-spacer></v-spacer>
-                <p>build: 0.6</p>
+                <p class="overline" >build: 0.8</p>
                 <v-spacer></v-spacer>
-                <v-toolbar-title> {{loggedInEmail}} </v-toolbar-title>
+                <v-toolbar-title> {{user_id}} </v-toolbar-title>
                 <v-spacer></v-spacer>
                      
                 <v-toolbar-title v-if="!loggedIn" class="mx-3"> <router-link :to="{ name: 'Login'}">Login</router-link> </v-toolbar-title>  
@@ -59,6 +59,7 @@ export default {
             ],
             loggedIn:false,
             loggedInEmail:'',
+            user_id:''
             
         }
     },//end data
@@ -78,6 +79,7 @@ export default {
             if(user){
                 this.loggedIn=true;
                 this.loggedInEmail = user.email
+                this.user_id = user.uid
 
                 //PRØVER Å SETTE VIA EN DISPATCH 
                 let user_id = user.uid

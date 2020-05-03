@@ -53,6 +53,13 @@ import db from '@/firebase/init'
                     'ball',
                     'team',
                     'solo',
+                    'endurance',
+                    'strength',
+                    'core',
+                    'balance',
+                    'water',
+                    'mountain',
+                    'snow'
                     ],
                 photoRef:null,
                 storageRef:null,

@@ -11,6 +11,7 @@ import Signup from '@/components/Auth/Signup'
 import ProfileView from '@/views/ProfileView'
 import Login from '@/components/Auth/Login'
 import AddInterests from '@/views/AddInterests'
+import EditSession from '@/views/EditSession'
 
 Vue.use(VueRouter)
 
@@ -71,6 +72,11 @@ const routes = [
     path: '/add-interests',
     name: 'AddInterests',
     component: AddInterests
+  },
+  {
+    path: '/edit-session',
+    name: 'EditSession',
+    component: EditSession
   },
   {
     path: '/about',
