@@ -69,8 +69,8 @@ export default {
                 console.log('You were successfully logged out.')
                 })
                 .catch(err=> console.log(err))
-            // this.$router.push({name: 'home'})
             this.$store.dispatch('resetCurrentUser')
+            this.$router.push({name: 'home'})
         }
     },
     mounted(){

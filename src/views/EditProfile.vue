@@ -56,6 +56,7 @@
                 <v-col>
                     <v-textarea
                         name="bio"
+                        v-model="bio"
                         label="Bio"
                         id="bio"
                         auto-grow
@@ -123,7 +124,6 @@
                 <v-col cols="3"> 
                     <v-btn color="deep-orange" class="white--text" depressed @click.prevent="updateUser">Update Info</v-btn>
                 </v-col>
-            
             </v-row>
          </v-form>
     </v-container>  
@@ -157,7 +157,8 @@ export default {
             message:'',
             alert:false,
             isTrainer:false,
-            education:[]
+            education:[],
+            bio:''
 
         }
     },
@@ -189,7 +190,9 @@ export default {
               motto: this.loggedInUser.motto,
               goal: this.loggedInUser.goal,
               name: this.loggedInUser.name,
-              isTrainer: this.isTrainer
+              isTrainer: this.isTrainer,
+              education: this.education,
+              bio: this.bio
           }).then(() => {
               this.$store.dispatch('setCurrentUser', user.uid)
               this.message='Profile has been updated'
@@ -203,7 +206,12 @@ export default {
           })
       },
       addEducation(eduItem){
-        this.education.push(eduItem)
+        if(this.education === undefined){
+            this.education=[]
+            this.education.push(eduItem)
+        } else {
+            this.education.push(eduItem)
+        }  
       },
       delEduItem(index){
 
@@ -220,7 +228,9 @@ export default {
              this.loggedInUser.postcode = res.data().postcode
              this.loggedInUser.motto = res.data().motto
              this.loggedInUser.goal = res.data().goal
-             this.isTrainer = res.data().isTrainer
+             this.isTrainer = res.data().isTrainer,
+             this.education = res.data().education,
+             this.bio = res.data().bio
              
         })        
     }
