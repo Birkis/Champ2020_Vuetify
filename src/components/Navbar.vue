@@ -6,17 +6,28 @@
                                     <v-toolbar-title class="display-1" ><span class="font-weight-light">CHAMP</span><span class="font-weight-bold" >2020</span></v-toolbar-title>
                 </router-link>
                 <v-spacer></v-spacer>
-                <p class="overline" >build: 0.8</p>
-                <v-spacer></v-spacer>
-                <v-toolbar-title> {{user_id}} </v-toolbar-title>
+                <p class="overline" >Beta</p>
                 <v-spacer></v-spacer>
                      
                 <v-toolbar-title v-if="!loggedIn" class="mx-3"> <router-link :to="{ name: 'Login'}">Login</router-link> </v-toolbar-title>  
-                <v-toolbar-title v-if="loggedIn" class="mx-3" @click.prevent="byeBye">Logout</v-toolbar-title>    
+                <v-btn color="blue ligthen" text v-if="loggedIn" class="mx-3" @click.prevent="byeBye">Logout</v-btn>    
 
         </v-app-bar>    
 
-        <v-navigation-drawer v-model="drawer" app class="deep-orange" >
+        <v-navigation-drawer v-model="drawer" app class="deep-orange" >  
+                <v-row justify="end" class="mt-7">
+                    <v-col cols="8">
+                        <v-avatar
+                            size="100"
+                            color="red"
+                            class="mb-7"
+                            >
+                            <img :src="currentUser.profilePic" alt="alt">
+                        </v-avatar>
+                        <p class="title white--text">{{currentUser.name}}</p>
+                    </v-col>
+                </v-row>
+
                 <v-list nav class="py-0">
                     <v-list-item v-for="link in links" :key="link.name" link :to="link.route" >
                         <v-list-item-icon>
@@ -37,6 +48,8 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
+                <v-divider inset light="true"></v-divider>
+                
         </v-navigation-drawer>    
        
     </v-container>
@@ -45,6 +58,7 @@
 
 <script>
 import firebase from 'firebase'
+import {mapState} from 'vuex'
 
 export default {
     data(){
@@ -63,6 +77,7 @@ export default {
             
         }
     },//end data
+    computed:mapState(['currentUser']),
     methods:{
         byeBye(){
             // eslint-disable-next-line no-unused-vars
