@@ -114,7 +114,7 @@
                         <v-tab-item>
                             <p>Some item</p>
                         </v-tab-item>
-                    <v-tab>Saved Sessions</v-tab>
+                    <v-tab>Reviews</v-tab>
                         <v-tab-item>
                             <p>Some item</p>
                         </v-tab-item>
@@ -162,7 +162,7 @@ export default {
 
         }
     },
-    computed: mapState(['interests','genderTypes','currentUser']),
+    computed: mapState(['interests','genderTypes']),
     watch: {
       model (val) {
         if (val.length > 5) {
@@ -214,20 +214,25 @@ export default {
         }  
       },
       delEduItem(index){
+
           this.education.splice(index,1)
       }
     },
     created(){
-        this.loggedInUser=this.currentUser
-        this.date = this.currentUser.dob
-        this.genderValue = this.currentUser.gender
-        this.interestValues = this.currentUser.interests
-        this.loggedInUser.postcode = this.currentUser.postcode
-        this.loggedInUser.motto = this.currentUser.motto
-        this.loggedInUser.goal = this.currentUser.goal
-        this.isTrainer = this.currentUser.isTrainer,
-        this.education = this.currentUser.education,
-        this.bio = this.currentUser.bio        
+        let thisUser = firebase.auth().currentUser
+        db.collection('users').doc(thisUser.uid).get().then( res => {
+             this.loggedInUser=res.data()
+             this.date = res.data().dob
+             this.genderValue = res.data().gender
+             this.interestValues = res.data().interests
+             this.loggedInUser.postcode = res.data().postcode
+             this.loggedInUser.motto = res.data().motto
+             this.loggedInUser.goal = res.data().goal
+             this.isTrainer = res.data().isTrainer,
+             this.education = res.data().education,
+             this.bio = res.data().bio
+             
+        })        
     }
 }
 </script>

@@ -31,7 +31,8 @@
                     label="Description" 
                     type="text" 
                     v-model="sessionDescription" 
-                    rows="2" 
+                    rows="2"
+                    filled 
                     auto-grow>
                     </v-textarea>
                 </v-col>

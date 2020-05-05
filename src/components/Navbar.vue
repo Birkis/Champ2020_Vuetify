@@ -68,7 +68,7 @@ export default {
                 {icon:'mdi-view-dashboard-outline', name:'Home', route:'/'},          
             ],
             guardedLinks:[
-                {icon:'mdi-account-edit-outline', name:'Edit Profile', route:'/editprofile'},
+                {icon:'mdi-account-edit-outline', name:'My Account', route:'/editprofile'},
                 {icon:'mdi-plus', name:'Create Session', route:'/createsession'},
             ],
             loggedIn:false,

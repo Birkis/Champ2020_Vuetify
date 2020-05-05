@@ -4,14 +4,19 @@
             <v-tab>Sessions</v-tab>
               <v-tab-item>
                 <v-row justify="center">
-                  <v-col cols="12">
+                  <v-col cols="10">
                       <SessionCard :sessions="notExpiredSession" :currentUser="loggedInUser"/>
                   </v-col>
                 </v-row>
               </v-tab-item>
             <v-tab>Trainers</v-tab>
               <v-tab-item>
-                <ProfileCard :users="users"/>
+                <v-row justify="center">
+                  <v-col cols="10">
+                    <ProfileCard :users="users"/>
+                  </v-col>
+                </v-row>
+                
               </v-tab-item>
           </v-tabs>
     </v-container>

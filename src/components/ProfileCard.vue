@@ -3,16 +3,8 @@
          <v-row>
             <v-col v-for="(user,index) in users" :key="index">
                <v-card
-                    max-width="300"
+                    width="400"
                     class="mx-auto"
-                      >
-                    
-                    
-                    <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-                    height="150"
-                    align="end"
-                    class="align-end header-image"
                     >
                     <v-list-item>
                     <v-list-item-avatar color="grey" size="55"><v-img :src="user.profilePic"></v-img></v-list-item-avatar>
@@ -21,18 +13,18 @@
                         <v-rating v-if="!null" dense v-model="rating"></v-rating>
                     </v-list-item-content>
                     </v-list-item>
-                    </v-img>
+                    <v-divider></v-divider>
                     <v-row justify="start">
-                        <v-col cols="5" class="mx-1" v-for="(interest,index) in user.interests" :key="index">                        
-                            <v-chip>{{interest}}</v-chip>
+                        <v-col cols="10" class="mx-3" >                        
+                            <span class="overline" v-for="(interest,index) in user.interests" :key="index">{{interest}} | </span>
                         </v-col>
                     </v-row>
-                    
+                    <v-divider ></v-divider>
 
                     <v-card-text>
                        {{user.motto}}
                     </v-card-text>
-
+                    <v-divider></v-divider>
                     <v-card-actions>
                     <v-btn
                         text
