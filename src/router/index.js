@@ -12,6 +12,7 @@ import ProfileView from '@/views/ProfileView'
 import Login from '@/components/Auth/Login'
 import AddInterests from '@/views/AddInterests'
 import EditSession from '@/views/EditSession'
+import Chat from '@/views/Chat'
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,13 @@ const routes = [
     path: '/edit-session',
     name: 'EditSession',
     component: EditSession
+  },
+  {
+    path: '/chat/:user_id/:token',
+    name: 'Chat',
+    component: Chat,
+    props: true
+
   },
   {
     path: '/about',

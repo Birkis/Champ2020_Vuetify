@@ -29,8 +29,7 @@
                     <v-btn
                         text
                         color="deep-purple accent-4"
-                        
-                        
+                        @click.prevent="sendMessage(user.user_id)"    
                     >
                         contact
                     </v-btn>
@@ -59,14 +58,20 @@ export default {
     props:['users'],
     data(){
         return {
-            rating:0
+            rating:0,
+
         
         
 
         }
     },
     computed:{
-
+    },
+    methods:{
+        sendMessage(user_id){
+            let token = Math.random().toString(16).substr(2,12)
+            this.$router.push({name:'Chat', params: {user_id, token}})
+        }
     }
     
 
