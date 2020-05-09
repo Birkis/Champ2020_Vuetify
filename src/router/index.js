@@ -13,6 +13,7 @@ import Login from '@/components/Auth/Login'
 import AddInterests from '@/views/AddInterests'
 import EditSession from '@/views/EditSession'
 import Chat from '@/views/Chat'
+import db from '@/firebase/init'
 
 Vue.use(VueRouter)
 
@@ -83,7 +84,12 @@ const routes = [
     path: '/chat/:user_id/:token',
     name: 'Chat',
     component: Chat,
-    props: true
+    props: true,
+    beforeEnter: (to, from, next) =>{
+      console.log(to)
+      // db.collection('users').doc(to.params.name)
+      next()
+    }
 
   },
   {

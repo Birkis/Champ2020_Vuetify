@@ -29,7 +29,7 @@
                     <v-btn
                         text
                         color="deep-purple accent-4"
-                        @click.prevent="sendMessage(user.user_id)"    
+                        @click.prevent="sendMessage(user.user_id, currentUser)"    
                     >
                         contact
                     </v-btn>
@@ -38,7 +38,7 @@
                     <v-btn icon>
                         
                     </v-btn>
-                    <v-btn icon>
+                    <v-btn icon @click.prevent="test" >
                         <v-icon>mdi-share-variant</v-icon>
                     </v-btn>
                     </v-card-actions>
@@ -52,6 +52,8 @@
 <script>
 /* eslint-disable no-unused-vars */
 import db from '@/firebase/init'
+import {mapState} from 'vuex'
+import firebase from 'firebase'
 
 export default {
     name:'ProfileCard',
@@ -65,12 +67,49 @@ export default {
 
         }
     },
-    computed:{
-    },
+    computed:mapState(['currentUser'])
+    ,
     methods:{
-        sendMessage(user_id){
-            let token = Math.random().toString(16).substr(2,12)
-            this.$router.push({name:'Chat', params: {user_id, token}})
+        sendMessage(user_id, me){
+            let myID = me.user_id
+            if(me.chats !== undefined){
+                let chats = []
+                let ref = db.collection('chats').get()
+                .then( docs => {
+                    docs.forEach( doc => {
+                        chats.push(doc.data())
+                        })
+                }).then(()=>{
+                    let found = chats.find(chat => {
+                        return chat.users.user_id == user_id && chat.users.myID == myID
+                        })
+                    return found     
+                }).then(convo => {
+                    let messages = convo.msgs
+                    let token = convo.token
+                    this.$router.push({name:'Chat', params: {user_id, myID, token, messages}})
+                })                
+            }else{
+                let token = Math.random().toString(16).substr(2,12)
+                db.collection('chats').doc(token).set({
+                    token,
+                    users:{
+                        user_id,
+                        myID
+                    },
+                    msgs:[]
+                })
+                db.collection('users').doc(myID).update({
+                    chats: firebase.firestore.FieldValue.arrayUnion(token)
+                })
+                this.$router.push({name:'Chat', params: {user_id, token, myID}})
+            }
+            
+            
+            
+        },
+        test(){
+            console.log(this.currentUser.name)
         }
     }
     

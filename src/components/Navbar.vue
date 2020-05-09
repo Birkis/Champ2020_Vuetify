@@ -48,7 +48,7 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
-                <v-divider inset light="true"></v-divider>
+                <v-divider inset></v-divider>
                 
         </v-navigation-drawer>    
        
