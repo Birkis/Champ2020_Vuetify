@@ -7,10 +7,13 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import SessionCard from '@/components/SessionCard'
 import ProfileContent from '@/components/ProfileContent'
 import ProfileCard from '@/components/ProfileCard'
+import VueChatScroll from 'vue-chat-scroll'
 
 Vue.component('SessionCard', SessionCard)
 Vue.component('ProfileContent', ProfileContent)
 Vue.component('ProfileCard', ProfileCard)
+
+Vue.use(VueChatScroll)
 
 Vue.use(VueGoogleMaps, {
   load: {

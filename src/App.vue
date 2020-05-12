@@ -30,6 +30,7 @@ export default {
     this.$store.dispatch('getSessions')
     this.$store.dispatch('getUsers')
     this.$store.dispatch('getCategories')
+    this.$store.dispatch('getChats')
   }
  
 };

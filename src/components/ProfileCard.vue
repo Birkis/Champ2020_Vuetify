@@ -14,6 +14,8 @@
                     </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
+                    <p>{{user.chats}}</p>
+                    <v-divider></v-divider>
                     <v-row justify="start">
                         <v-col cols="10" class="mx-3" >                        
                             <span class="overline" v-for="(interest,index) in user.interests" :key="index">{{interest}} | </span>
@@ -29,7 +31,12 @@
                     <v-btn
                         text
                         color="deep-purple accent-4"
-                        @click.prevent="sendMessage(user.user_id, currentUser)"    
+                        @click.prevent="sendMessage(user.user_id,
+                                                    user.name, 
+                                                    user.chats, 
+                                                    currentUser.user_id,
+                                                    currentUser.name, 
+                                                    currentUser.chats)"    
                     >
                         contact
                     </v-btn>
@@ -61,56 +68,45 @@ export default {
     data(){
         return {
             rating:0,
-
-        
-        
-
         }
     },
-    computed:mapState(['currentUser'])
+    computed:{
+        myChats(){
+            return this.$store.getters.myChats(this.currentUser.user_id)
+        },
+        ...mapState(['currentUser'])}
     ,
     methods:{
-        sendMessage(user_id, me){
-            let myID = me.user_id
-            if(me.chats !== undefined){
-                let chats = []
-                let ref = db.collection('chats').get()
-                .then( docs => {
-                    docs.forEach( doc => {
-                        chats.push(doc.data())
-                        })
-                }).then(()=>{
-                    let found = chats.find(chat => {
-                        return chat.users.user_id == user_id && chat.users.myID == myID
-                        })
-                    return found     
-                }).then(convo => {
-                    let messages = convo.msgs
-                    let token = convo.token
-                    this.$router.push({name:'Chat', params: {user_id, myID, token, messages}})
-                })                
-            }else{
+        sendMessage(user_a,user_a_name, a_chats, user_b, user_b_name, b_chats){                  
+            if(a_chats !== undefined){
+                let ourChat = a_chats.find( chat => b_chats.includes(chat))
+                this.$router.push({name:'Chat', params: {user_a, 
+                                                         token:ourChat, 
+                                                         me:user_b, 
+                                                         user_a_name,
+                                                         my_name:user_b_name}})
+                }
+            else {
+                console.log('We create a new chat')
                 let token = Math.random().toString(16).substr(2,12)
                 db.collection('chats').doc(token).set({
                     token,
                     users:{
-                        user_id,
-                        myID
+                        user_a,
+                        user_b
                     },
                     msgs:[]
                 })
-                db.collection('users').doc(myID).update({
+                db.collection('users').doc(user_b).update({
                     chats: firebase.firestore.FieldValue.arrayUnion(token)
                 })
-                this.$router.push({name:'Chat', params: {user_id, token, myID}})
+                db.collection('users').doc(user_a).update({
+                    chats: firebase.firestore.FieldValue.arrayUnion(token)
+                })
+                this.$router.push({name:'Chat', params: {user_a, token, me:user_b}}) 
             }
-            
-            
-            
+                   
         },
-        test(){
-            console.log(this.currentUser.name)
-        }
     }
     
 

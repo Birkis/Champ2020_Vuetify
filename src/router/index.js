@@ -81,13 +81,12 @@ const routes = [
     component: EditSession
   },
   {
-    path: '/chat/:user_id/:token',
+    path: '/chat/:token',
     name: 'Chat',
     component: Chat,
     props: true,
     beforeEnter: (to, from, next) =>{
       console.log(to)
-      // db.collection('users').doc(to.params.name)
       next()
     }
 

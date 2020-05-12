@@ -37,6 +37,9 @@ export default new Vuex.Store({
       },
       ADD_SAVED_SESSION(state,payload){
         state.currentUser.savedSessions.push(payload)
+      },
+      SET_CHATS(state,payload){
+        state.chats = payload
       }
 
 
@@ -63,7 +66,7 @@ export default new Vuex.Store({
       },
       getUsers({commit}){
         let payload = []
-        let ref = db.collection('users').orderBy('dob')        
+        let ref = db.collection('users').orderBy('email')        
         ref.onSnapshot( snap => {
           snap.docChanges().forEach(change => {
             if(change.type === 'added'){
@@ -98,7 +101,17 @@ export default new Vuex.Store({
       },
       setSavedSession({commit}, payload){
         commit('ADD_SAVED_SESSION', payload)
+      },
+      getChats({commit}){
+        let payload = []
+        db.collection('chats').get().then( docs => {
+          docs.forEach( doc => {
+            payload.push(doc.data())
+          })
+          commit('SET_CHATS', payload)
+        })
       }
+
   },//end Actions 
   getters:{
     notExpired: state => {
@@ -108,6 +121,9 @@ export default new Vuex.Store({
         })
       return unexpired
     },
+    myChats: (state) => (id) => {
+      return state.chats.filter(chat => chat.users.user_a === id || chat.users.user_b === id)
+    }
   }
 })//ends Vuex.store
 
