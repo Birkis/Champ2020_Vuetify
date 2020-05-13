@@ -4,19 +4,19 @@
         <p>Chat ID is: {{token}}</p>
         <div class="all-chat" v-chat-scroll>
             <div v-for="(message, index) in msgs" :key="index" >
-                <div v-if="message.sender === me" class="d-flex flex-row mb-5">
+                <div v-if="message.sender === me" class="d-flex flex-row-reverse mb-5">
                     <div>
-                        <v-chip class=" large teal lighten-2 dark-grey--text" > {{message.message}}</v-chip>
+                        <v-chip class=" large teal lighten-2 dark-grey--text mx-5" > {{message.message}}</v-chip>
                         
-                        <p class="overline ml-3 font-weight-medium chat">{{my_name}}</p>
+                        
                         
                     </div>
                 </div>
-                <div v-if="message.sender === user_a" class="d-flex flex-row-reverse mb-2">
+                <div v-if="message.sender === user_a" class="d-flex flex-row mb-2">
                     <div>
-                        <v-chip  class=" large deep-orange lighten-1 white--text" justify-content="flex-end" > {{message.message}}</v-chip>
+                        <v-chip  class=" large deep-orange lighten-1 white--text mx-5" justify-content="flex-end" > {{message.message}}</v-chip>
                         
-                        <p class="overline ml-3 font-weight-medium chat">{{user_a_name}}</p>
+                        
                     </div>
                     
                 </div>     
