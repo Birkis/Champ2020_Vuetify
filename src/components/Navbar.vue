@@ -70,6 +70,7 @@ export default {
             guardedLinks:[
                 {icon:'mdi-account-edit-outline', name:'My Account', route:'/editprofile'},
                 {icon:'mdi-plus', name:'Create Session', route:'/createsession'},
+                {icon:'mdi-forum', name:'Messages', route: '/mymessages'}
             ],
             loggedIn:false,
             loggedInEmail:'',

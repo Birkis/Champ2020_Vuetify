@@ -16,7 +16,8 @@ export default new Vuex.Store({
     users:[],
     currentSession:{},
     categories:[],
-    currentUser:{}
+    currentUser:{},
+    chats:[]
     
   },//end state
   mutations: {
@@ -123,6 +124,9 @@ export default new Vuex.Store({
     },
     myChats: (state) => (id) => {
       return state.chats.filter(chat => chat.users.user_a === id || chat.users.user_b === id)
+    },
+    myMessages: (state) => (token) => {
+      return state.chats.filter(chat => chat.token === token)
     }
   }
 })//ends Vuex.store

@@ -14,6 +14,8 @@ import AddInterests from '@/views/AddInterests'
 import EditSession from '@/views/EditSession'
 import Chat from '@/views/Chat'
 import db from '@/firebase/init'
+import MyMessages from '@/views/MyMessages'
+
 
 Vue.use(VueRouter)
 
@@ -81,6 +83,11 @@ const routes = [
     component: EditSession
   },
   {
+    path:'/mymessages',
+    name: 'MyMessages',
+    component: MyMessages
+  },
+  {
     path: '/chat/:token',
     name: 'Chat',
     component: Chat,
@@ -89,7 +96,6 @@ const routes = [
       console.log(to)
       next()
     }
-
   },
   {
     path: '/about',
