@@ -9,10 +9,13 @@
         <p>
           {{searchResponse}}  
         </p>
+        <SessionCard :sessions="searchResult"/>
     </v-container>
 </template>
 
 <script>
+    /* eslint-disable no-unused-vars */
+
     import axios from "axios";
     // import db from 'firebase/init'
     export default {
@@ -20,10 +23,18 @@
         data(){
             return {
                 searchText:"",
-                searchResponse: {}
+                searchResponse: {traits:{
+                        trening: [
+                            {value:null}
+                        ]
+                }}
             }
         },
-        computed: {},
+        computed: {
+            searchResult(){
+                return this.$store.getters.searchSessions(this.searchResponse.traits.trening[0].value)
+            },
+        },
         methods: {
             getData() {
                 let response = ''
@@ -42,12 +53,12 @@
                 })
                 .then( data => {
                     this.searchText = ''
-                    if(data){
-                        console.log(response.intents[0])
+                    if(response.traits.trening[0].confidence > 0.95){
+                        console.log(response.traits.trening[0].value)
                         }
                     else {
-                        console.log(response.intents[0])
-                    }
+                        console.log('Not sure what user wants')
+                        }
                     }
                 )
                 .catch(error => {

@@ -127,7 +127,11 @@ export default new Vuex.Store({
     },
     myMessages: (state) => (token) => {
       return state.chats.filter(chat => chat.token === token)
+    },
+    searchSessions: (state) => (value) => {
+      return state.sessions.filter(session => session.activity.name === value)
     }
+
   }
 })//ends Vuex.store
 
