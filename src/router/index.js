@@ -15,6 +15,7 @@ import EditSession from '@/views/EditSession'
 import Chat from '@/views/Chat'
 import db from '@/firebase/init'
 import MyMessages from '@/views/MyMessages'
+import Search from '@/views/Search'
 
 
 Vue.use(VueRouter)
@@ -96,6 +97,11 @@ const routes = [
       console.log(to)
       next()
     }
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search
   },
   {
     path: '/about',

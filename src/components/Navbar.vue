@@ -87,7 +87,7 @@ export default {
                 })
                 .catch(err=> console.log(err))
             this.$store.dispatch('resetCurrentUser')
-            this.$router.push({name: 'home'})
+            this.$router.push({name: 'Login'})
         }
     },
     mounted(){

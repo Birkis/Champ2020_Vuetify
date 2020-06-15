@@ -13,8 +13,7 @@
                         <v-rating v-if="!null" dense v-model="rating"></v-rating>
                     </v-list-item-content>
                     </v-list-item>
-                    <v-divider></v-divider>
-                    <p>{{user.chats}}</p>
+
                     <v-divider></v-divider>
                     <v-row justify="start">
                         <v-col cols="10" class="mx-3" >                        
@@ -29,6 +28,7 @@
                     <v-divider></v-divider>
                     <v-card-actions>
                     <v-btn
+                        v-if="currentUser.user_id !== user.user_id"
                         text
                         color="deep-purple accent-4"
                         @click.prevent="sendMessage(user.user_id,

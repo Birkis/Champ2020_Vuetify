@@ -5,7 +5,7 @@
               <v-tab-item>
                 <v-row justify="center">
                   <v-col cols="10">
-                      <SessionCard :sessions="notExpiredSession" :currentUser="loggedInUser"/>
+                      <SessionCard :sessions="notExpiredSession"/>
                   </v-col>
                 </v-row>
               </v-tab-item>

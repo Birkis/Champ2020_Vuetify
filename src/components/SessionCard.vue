@@ -22,13 +22,13 @@
                             {{session.sessionDescription}}
                         </v-card-text>
                         <v-card-actions>                           
-                            <v-btn text color="deep-orange accent-4">
+                            <v-btn v-if="currentUser.user_id !== session.host_id"  text color="deep-orange accent-4">
                                 Book Now
                             </v-btn>
-                            <v-btn text color="deep-orange accent-4">
+                            <!-- SAVE SESSION <v-btn text color="deep-orange accent-4">
                                 Save
-                            </v-btn>
-                              <v-btn v-if="currentUser && currentUser.uid === session.host_id"
+                            </v-btn> -->
+                              <v-btn v-if="currentUser && currentUser.user_id === session.host_id"
                                      text 
                                      color="deep-orange accent-4"
                                      @click.prevent="deleteSession(session.session_id)"
@@ -52,9 +52,11 @@
 </template>
 <script>
 import db from '@/firebase/init'
+import {mapState} from 'vuex'
 export default {
     name:'SessionCard',
-    props:['sessions','currentUser'],
+    props:['sessions'],
+    computed: { ...mapState(['currentUser']) },
     data(){
         return{
             hostName:null,

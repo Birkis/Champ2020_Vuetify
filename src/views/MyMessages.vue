@@ -29,9 +29,8 @@ import Messages from '@/components/Messages'
         },
         computed: {
             myChats(){
-            return this.$store.getters.myChats(this.currentUser.user_id)
+                return this.$store.getters.myChats(this.currentUser.user_id)
             },
-
             ...mapState(['currentUser'])
         }, //end computed   
         methods:{

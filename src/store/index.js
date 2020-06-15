@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     sessions:[],
-    interests:['basketball', 'yoga', 'running', 'windsurfing', 'bodybuilding','golf','Lacrosse','Strength','Pumping Iron', 'Rugby'],
+    interests:['basketball', 'yoga', 'running', 'windsurfing','boxing', 'bodybuilding','golf','Lacrosse','Strength','Pumping Iron', 'Rugby'],
     genderTypes: ['male','female','not your business'],
     loggedInUser:null,
     users:[],
